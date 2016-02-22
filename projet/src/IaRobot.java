@@ -12,7 +12,7 @@ public class IaRobot {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
+		//yanis le fils de sa maman
 	}
 
 }
