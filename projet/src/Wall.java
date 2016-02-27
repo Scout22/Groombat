@@ -1,16 +1,18 @@
 
+//Les murs ne peuvent etre que verticale ou horizontale.
 public class Wall extends Obstacle {
+	private double x1;
+	private double y1;
+	private double x2;
+	private double y2;
+	
+	boolean isCollide(Robot rob){
+		double xRobot=Robot.getX();
+		double yRobot=Robot.getY();
+		double rRayon=Robot.getShape();
 
-	public Wall() {
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		
+		return true;
 	}
 
 }
