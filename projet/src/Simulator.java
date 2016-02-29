@@ -15,8 +15,14 @@ public class Simulator {
 	public void addObstacle(Obstacle ob){
 		obstacles.add(ob);		
 	}
+	public void updatePosRobot(){
+		for(Robot rob:robots){
+			
+		}
+	}
 	public void addRobot(Robot rob){
 		robots.add(rob);
 	}
+	
 
 }
