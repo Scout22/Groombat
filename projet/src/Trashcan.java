@@ -1,6 +1,7 @@
 
 
 public class Trashcan extends Obstacle {
+	//Coucou oscar
 	private double x;
 	private double y;
 	private double rayon;
