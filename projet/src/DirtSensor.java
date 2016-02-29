@@ -1,9 +1,10 @@
 
 public class DirtSensor extends Sensor {
 	
-	protected double x; // revenir a radius/angle
-	protected double y;
+	protected double radiusInRobot; 
+	protected double angle;
 	protected double sensorRadius;
+	protected boolean triggered;
 	
 	
 	/**
@@ -11,46 +12,81 @@ public class DirtSensor extends Sensor {
 	 * Le capteur de poussiere est positionne au centre du robot avec un rayon nul.
 	 */
 	public DirtSensor() {
-		this.x = 0.0;
-		this.y = 0.0;
+		this.radiusInRobot = 0.0;
+		this.angle = 0.0;
 		this.sensorRadius = 0.0;
+		this.triggered = false;
 	}
 
 	/**
-	 * Constructeur.
-	 * On creer un capteur de poussiere positionne dans le robot avec une distance et un angle, ainsi qu un rayon de detection.
-	 * On donne pour le control d erreur le rayon total du robot, pour que le capteur ne depasse par du robot.
-	 * @param x distance du centre du robot (en m).
-	 * @param y distance du centre du robot (en m).
-	 * @param sensorRadius rayon du capteur.
-	 * @param robot robot qui porte le capteur
+	 * Constructeur du capteur de tache.
+	 * On creer un capteur de poussiere positionne dans le robot avec une distance et un angle, ainsi qu'un rayon de detection.
+	 * On donne pour le control d'erreur le rayon total du robot, pour que le capteur ne depasse par du robot.
+	 * @param radiusInRobot la distance entre le centre du robot et le capteur (en m).
+	 * @param angle angle de la position du capteur dans le robot (en degree).
+	 * @param sensorRadius rayon du capteur (en m).
+	 * @param robot robot qui porte le capteur.
 	 */	
-	public DirtSensor(double x, double y, double sensorRadius, Robot robot) {
-		double distanceFromCenter = Math.sqrt(Math.pow(x-robot.getX(),2) +Math.pow(y-robot.getY(),2));
-		if(distanceFromCenter + sensorRadius > robot.getRadius()){
+	public DirtSensor(double radiusInRobot, double angle, double sensorRadius, Robot robot) {
+		if(radiusInRobot + sensorRadius > robot.getRadius()){
 			System.out.println("Error creating DirtSensor : sensor outside robot boudaries, setting to default (null)");
-			this.x = 0.0;
-			this.y = 0.0;
+			this.radiusInRobot = 0.0;
+			this.angle = 0.0;
 			this.sensorRadius = 0.0;
+			this.triggered = false;
 		}
 		else{
-			this.x = x;
-			this.y = y;
+			this.radiusInRobot = radiusInRobot;
+			this.angle = angle;
 			this.sensorRadius = sensorRadius;
+			this.triggered = false;
 		}
 	}
 
 	/** 
-	 * Indique si le capteur est actif car au dessus d une tache
-	 * @param map carte contenant la liste des taches
+	 * Indique si le capteur est actif car au dessus d'une tache.
+	 * @param map carte contenant la liste des taches.
 	 */
 	
-	public boolean isTriggered(Map map, Robot robot){
+	public void isTriggered(Map map, Robot robot){
+		this.triggered = false;
 		for(int i=0; i<map.getDirtSpots().size(); i++){
-			if(map.getDirtSpots().get(i).colliderSensor(this.x, this.y, this.sensorRadius)){
-				return true;
+			if(map.getDirtSpots().get(i).colliderSensor(this.radiusInRobot, this.angle, this.sensorRadius)){
+				this.triggered = true;
+				return;
 			}
 		}
-		return false;
+	}
+
+	public double getRadiusInRobot() {
+		return radiusInRobot;
+	}
+
+	public void setRadiusInRobot(double radiusInRobot) {
+		this.radiusInRobot = radiusInRobot;
+	}
+
+	public double getAngle() {
+		return angle;
+	}
+
+	public void setAngle(double angle) {
+		this.angle = angle;
+	}
+
+	public double getSensorRadius() {
+		return sensorRadius;
+	}
+
+	public void setSensorRadius(double sensorRadius) {
+		this.sensorRadius = sensorRadius;
+	}
+
+	public boolean isTriggered() {
+		return triggered;
+	}
+
+	public void setTriggered(boolean triggered) {
+		this.triggered = triggered;
 	}
 }
