@@ -7,9 +7,9 @@ public class Wall extends Obstacle {
 	private double y2;
 	
 	boolean isCollide(Robot rob){
-		double xRobot=Robot.getX();
-		double yRobot=Robot.getY();
-		double rRayon=Robot.getShape();
+		double xRobot=rob.getX();
+		double yRobot=rob.getY();
+		double rRayon=rob.getRadius();
 
 		
 		return true;
