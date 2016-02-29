@@ -1,8 +1,10 @@
 
 public class Simulator {
-
+	
+	public Map map;
+	
 	public Simulator() {
-		// TODO Auto-generated constructor stub
+		this.map = new Map();
 	}
 
 	/**

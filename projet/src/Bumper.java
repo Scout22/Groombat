@@ -2,7 +2,8 @@
 public class Bumper extends Sensor {
 
 	protected double angleInit;
-	protected double angleFin;
+	protected double span;
+	protected boolean triggered;
 	
 	/**
 	 * Constructeur par default.
@@ -11,34 +12,45 @@ public class Bumper extends Sensor {
 	
 	public Bumper() {
 		this.angleInit = 0.0;
-		this.angleFin = 0.0;
+		this.span = 0.0;
+		this.triggered = false;
 	}
 
 	/**
 	 * Constructeur.
-	 * Le bumper est positionne avec une position relative a celle de la peripherie du robot
-	 * @param angleInit angle de depart du bumper, dans le sens trigo
-	 * @param angleFin angle pris dans le sens trigo a partir de l angle initial
+	 * Le bumper est positionne avec une position relative a celle de la peripherie du robot.
+	 * @param angleInit angle de depart du bumper, dans le sens trigo.
+	 * @param span angle pris dans le sens trigo a partir de l angle initial.
 	 */
 	
-	public Bumper(double angleInit, double angleFin) {
+	public Bumper(double angleInit, double span) {
 		this.angleInit = angleInit;
-		this.angleFin = angleFin;
+		this.span = span;
+		this.triggered = false;
 	}
 	
 	/**
-	 * Indique si le capteur est actif car en collision avec un obstacle
-	 * @param map carte contenant la liste des obstacles
-	 * @param robot robot portant le capteur
+	 * Indique si le capteur est actif car en collision avec un obstacle.
+	 * @param map carte contenant la liste des obstacles.
+	 * @param robot robot portant le capteur.
 	 */
 	
-	public boolean isTriggered(Map map, Robot robot){
+	public void isTriggered(Map map, Robot robot){
+		this.triggered = false;
 		for(int i=0; i<map.getObstacles().size(); i++){
-			if(map.getObstacles().get(i).collideSensor(this.angleInit, this.angleFin, robot)){
-				return true;
+			if(map.getObstacles().get(i).collideSensor(this.angleInit, this.span, robot)){
+				this.triggered = true;
+				return;
 			}
 		}
-		return false;
+	}
+
+	public boolean isTriggered() {
+		return triggered;
+	}
+
+	public void setTriggered(boolean triggered) {
+		this.triggered = triggered;
 	}
 
 	public double getAngleInit() {
@@ -49,12 +61,12 @@ public class Bumper extends Sensor {
 		this.angleInit = angleInit;
 	}
 
-	public double getAngleFin() {
-		return angleFin;
+	public double getSpan() {
+		return span;
 	}
 
-	public void setAngleFin(double angleFin) {
-		this.angleFin = angleFin;
+	public void setSpan(double span) {
+		this.span = span;
 	}
 
 }
