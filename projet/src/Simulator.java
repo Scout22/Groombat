@@ -21,5 +21,14 @@ public class Simulator {
 	public void addRobot(Robot rob){
 		robots.add(rob);
 	}
+	public ArrayList<Obstacle> getObstacles() {
+		return obstacles;
+	}
+	public ArrayList<DirtSpot> getDirtSpots() {
+		return dirtSpots;
+	}
+	public ArrayList<Robot> getRobots() {
+		return robots;
+	}
 
 }

@@ -1,4 +1,7 @@
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Line2D;
+
 import javax.swing.*;
 
 // Pour les details sur les fonctions de dessin, voir :
@@ -35,11 +38,11 @@ class Move extends JPanel
     g2.setColor(Color.white);
     g2.fillRect(0, 0 , this.getHeight(), this.getWidth());
     // on dessine la carte
-    for(int i=0; i<this.sim.map.getObstacles().size(); i++){
-    	paintObstacle(g2, this.sim.map.getObstacles().get(i));
+    for(int i=0; i<this.sim.getObstacles().size(); i++){
+    	paintObstacle(g2, this.sim.getObstacles().get(i));
     }
-    for(int i=0; i<this.sim.map.getDirtSpots().size(); i++){
-    	paintDirtSpot(g2, this.sim.map.getDirtSpots().get(i));
+    for(int i=0; i<this.sim.getDirtSpots().size(); i++){
+    	paintDirtSpot(g2, this.sim.getDirtSpots().get(i)); // j'en suis la
     }
     //g2.setColor(Color.red);
     //g2.fillOval(x, y, 40, 40);
@@ -47,7 +50,8 @@ class Move extends JPanel
     // on rend la main
     g2.dispose();
   }
-  public void paintDirtSpot()Graphics2D g, Obstacle obs){
+  public void paintDirtSpot(Graphics2D g, DirtSpot dirt){
+	  g.setColor(Color.pink);
 	  
   }
   
@@ -56,11 +60,13 @@ class Move extends JPanel
 	  g.setColor(Color.black);
 	  if(obs instanceof Trashcan){
 		  Trashcan t = (Trashcan) obs;
-		  g.fillOval(t.getX(),t.getY(), t.getRayon, t.getRayon());
+		  Shape circle = new Ellipse2D.Double(t.getX(),t.getY(), t.getRayon(),t.getRayon());
+		  g.draw(circle);
 	  }
 	  if(obs instanceof Wall){
 		  Wall w = (Wall) obs;
-		  g.drawLine(w.getX1(), w.getY1(), w.getX2(), w.getY2());
+		  Shape line = new Line2D.Double(w.getX1(), w.getY1(), w.getX2(), w.getY2());
+		  g.draw(line);
 	  }
   }
   
