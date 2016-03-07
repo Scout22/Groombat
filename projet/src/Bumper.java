@@ -1,9 +1,12 @@
+import java.awt.geom.Point2D;
+import java.util.ArrayList;
 
 public class Bumper extends Sensor {
 
 	protected double angleInit;
 	protected double span;
 	protected boolean triggered;
+	private static double thickness=0.002;
 	
 	/**
 	 * Constructeur par default.
@@ -24,8 +27,11 @@ public class Bumper extends Sensor {
 	 */
 	
 	public Bumper(double angleInit, double span) {
-		this.angleInit = angleInit;
-		this.span = span;
+		this.angleInit = Math.toRadians(angleInit%360);
+		if(angleInit<0){
+			angleInit=Math.PI+angleInit;
+		}
+		this.span = Math.toRadians(span);
 		this.triggered = false;
 	}
 	
@@ -35,13 +41,26 @@ public class Bumper extends Sensor {
 	 * @param robot robot portant le capteur.
 	 */
 	
-	public void isTriggered(Map map, Robot robot){
-		this.triggered = false;
-		for(int i=0; i<map.getObstacles().size(); i++){
-			if(map.getObstacles().get(i).collideSensor(this.angleInit, this.span, robot)){
-				this.triggered = true;
-				return;
+	public void updateState(Map terrain, Robot robot){
+		triggered=false;
+		for(Obstacle ob:terrain.getObstacles()){
+			if(triggered){
+				break;
 			}
+			switch (ob.getType()){
+			case "Wall":
+				Wall w=(Wall)ob;
+				triggered=Collision.ArcLine(new Point2D.Double(robot.getX(), robot.getY()), robot.getRadius()+thickness,(robot.getTheta()+ angleInit)%(2*Math.PI), span, w.getLine());
+				break;
+			case "Trashcan":
+				Trashcan tc=(Trashcan)ob;
+				triggered=Collision.ArcCircle(new Point2D.Double(robot.getX(), robot.getY()), robot.getRadius()+thickness, (robot.getTheta()+ angleInit)%(2*Math.PI), span, tc.getPt(),tc.getRadius());
+				break;
+			default:
+			}
+		}
+		if(triggered){
+			System.out.println("Sensor triggered");
 		}
 	}
 
@@ -49,24 +68,13 @@ public class Bumper extends Sensor {
 		return triggered;
 	}
 
-	public void setTriggered(boolean triggered) {
-		this.triggered = triggered;
-	}
-
 	public double getAngleInit() {
 		return angleInit;
-	}
-
-	public void setAngleInit(double angleInit) {
-		this.angleInit = angleInit;
 	}
 
 	public double getSpan() {
 		return span;
 	}
 
-	public void setSpan(double span) {
-		this.span = span;
-	}
 
 }

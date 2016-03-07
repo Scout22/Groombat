@@ -35,13 +35,22 @@ public class Robot {
 	 * @param mode entier correspondant au mode de fonctionnement de l'ia du robot, 1 pour la valeur par default.
 	 * @param sensors liste des capteurs du robot.
 	 */
-	public Robot(double speedLeft, double speedRight, double x, double y,double theta, double radius, int mode){
+	public Robot(double speedLeft, double speedRight, double x, double y,double theta, double radius, int mode,double distWheel){
 		this.speedLeft = speedLeft;
 		this.speedRight = speedRight;
 		this.posture = new Posture(x,y,theta);
 		this.ia = new IaRobot(this, mode);
 		this.sensors = new ArrayList<Sensor>();
 		this.radius = radius;
+		this.distWheel=distWheel;
+	}
+	
+	public Robot(double speedLeft, double speedRight, Posture p, double radius,double distWheel){
+		this.speedLeft = speedLeft;
+		this.speedRight = speedRight;
+		this.posture = p;
+		this.radius = radius;
+		this.distWheel=distWheel;
 	}
 	
 	public double getDistWheel(){
@@ -111,5 +120,10 @@ public class Robot {
 	public double getTheta(){
 		return this.posture.getTheta();
 	}
+	public Robot clone(){
+		return new Robot(speedLeft,speedRight, posture.getX(), posture.getY(),posture.getTheta(),  radius,  0, distWheel);
+		
+	}
+	
 
 }

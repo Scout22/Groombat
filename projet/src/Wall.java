@@ -1,38 +1,38 @@
+import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
 
 //Les murs ne peuvent etre que verticale ou horizontale.
 public class Wall extends Obstacle {
-	private double x1;
-	private double y1;
-	private double x2;
-	private double y2;
+	private Line2D.Double line;
 	
 	Wall(double x1,double y1,double x2,double y2){
-		this.x1=x1;
-		this.x2=x2;
-		this.y1=y1;
-		this.y2=y2;
+		line=new Line2D.Double(x1,y1,x2,y2);
+		type="Wall";
 	}
 	
 	public double getX1(){
-		return x1;
+		return line.getX1();
 	}
 	public double getX2(){
-		return y1;
+		return line.getX2();
 	}
 	public double getY1(){
-		return x2;
+		return line.getY1();
 	}
 	public double getY2(){
-		return y2;
+		return line.getY2();
+	}
+	public Line2D.Double getLine(){
+		return line;
 	}
 	
-	boolean isCollide(Robot rob){
+	public boolean isCollideRobot(Robot rob){
 		double xRobot=rob.getX();
 		double yRobot=rob.getY();
-		double rRayon=rob.getRadius();
-
+		double rRobot=rob.getRadius();
+		Point2D.Double cRobot= new Point2D.Double(xRobot, yRobot);
+		return Collision.CircleLine(cRobot,rRobot,line);
 		
-		return true;
 	}
 
 }

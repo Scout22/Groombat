@@ -12,8 +12,7 @@ public abstract class Sensor {
 	 * retourne faux par default
 	 * @param map carte parcourue par le robot
 	 */
-	public boolean isTriggered(Map map){
-		return false;
+	public void updateState(Map map,Robot rob ){
 	}
 }
 

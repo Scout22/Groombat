@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 
@@ -9,31 +10,24 @@ import javax.swing.*;
 // voir aussi : http://java.sun.com/docs/books/tutorial/2d/index.html
 class Move extends JPanel 
 {
-  private int x;
-  private int prev_x;
-  private int y;
-  private int prev_y;
   private Simulator sim;
+  private double scaleFactor;
+  private Image img0;
   
-  public Move(Simulator sim)
+  public Move(Simulator sim, double sf)
   {
+	img0 = Toolkit.getDefaultToolkit().getImage("a.png");
+	scaleFactor=sf;
 	this.sim = sim;
-    x = 0;
-    y = 0;
     setBackground(Color.white);
     setOpaque(true);
   }
 
-  public void moveRobot(int x, int y)
-  {
-    this.x = x;
-    this.y = y;
-  }
+ 
 
   public void paint(Graphics g) {
 	  
-	//g2.setColor(Color.red); // exemple de base
-	//g2.fillOval(x, y, 40, 40); // a supprimer
+
 	  
       super.paint(g);
     
@@ -45,16 +39,16 @@ class Move extends JPanel
     g2.fillRect(0, 0 , this.getHeight(), this.getWidth());
     
     // on dessine la carte
-    for(int i=0; i<this.sim.getObstacles().size(); i++){
-    	paintObstacle(g2, this.sim.getObstacles().get(i));
+    for(Obstacle ob:sim.getObstacles()){
+    	paintObstacle(g2, ob);
     }
-    for(int i=0; i<this.sim.getDirtSpots().size(); i++){
-    	paintDirtSpot(g2, this.sim.getDirtSpots().get(i)); // j'en suis la
+    for(DirtSpot ds:sim.getDirtSpots()){
+    	paintDirtSpot(g2, ds); 
     }
     
     // on dessine les robots
-    for(int i=0; i<this.sim.getRobots().size(); i++){
-    	paintRobot(g2,this.sim.getRobots().get(i));
+    for(Robot rob:sim.getRobots()){
+    	paintRobot(g2,rob);
     }
     
     // on rend la main
@@ -62,60 +56,69 @@ class Move extends JPanel
   }
 
   private void paintRobot(Graphics2D g, Robot robot) {
-	  g.setColor(Color.blue);
-	  Shape circle = new Ellipse2D.Double(robot.getX()-100*robot.getRadius(),robot.getY()-100*robot.getRadius(), 200*robot.getRadius(),200*robot.getRadius());
-	  g.draw(circle);
-	  Shape line = new Line2D.Double(robot.getX(),robot.getY(), robot.getX()+100*robot.getRadius()*Math.cos(Math.PI*(-robot.getTheta())/180), robot.getY()+100*robot.getRadius()*Math.sin(Math.PI*(-robot.getTheta())/180));
-	  g.draw(line);
+	 
+      
+	  double x=scaleFactor*robot.getX();
+	  double y=scaleFactor*robot.getY();
+	  double radius=scaleFactor*robot.getRadius();
+	  double theta=robot.getTheta();
+	 
+	  
+	  AffineTransform old = g.getTransform();
+	  AffineTransform tr2= new AffineTransform();
+	  
+      tr2.rotate(theta, x, y);
+      g.transform(tr2);
+      g.drawImage(img0,(int)(x-radius),(int)(y-radius),(int)(2*radius),(int)(2*radius),null);
+      g.setColor(Color.RED);
+      g.drawOval((int)(x-radius),(int)(y-radius),(int)(2*radius),(int)(2*radius));
+      g.setColor(Color.CYAN);
+      g.setStroke(new BasicStroke(5));
+      for(Sensor sens:robot.getSensors()){
+    	  if(sens instanceof Bumper){
+    		  Bumper bump=(Bumper)sens;
+	  g.drawArc((int)(x-radius),(int)(y-radius),(int)(2*radius),(int)(2*radius),(int)Math.toDegrees(bump.angleInit),(int)Math.toDegrees(bump.span));
+	  }}
+      
+	 
+	  //g.draw(circle);
+	  //Shape line = new Line2D.Double(x,y,y+radius, 0);
+	  //g.draw(line);
+	  
+	  g.setTransform(old);
   }
 
   public void paintDirtSpot(Graphics2D g, DirtSpot dirt){
+
+	  double x=scaleFactor*dirt.getX();
+	  double y=scaleFactor*dirt.getY();
+	  double radius=scaleFactor*dirt.getRadius();
 	  g.setColor(Color.pink);
-	  Shape circle = new Ellipse2D.Double(dirt.getX()-50*dirt.getRadius(),dirt.getY()-50*dirt.getRadius(), 200*dirt.getRadius(),200*dirt.getRadius());
+	  Shape circle = new Ellipse2D.Double(x-radius,y-radius, 2*radius,2*radius);
 	  g.draw(circle);
   }
   
-  
   public void paintObstacle(Graphics2D g, Obstacle obs){
+	 
 	  g.setColor(Color.black);
 	  if(obs instanceof Trashcan){
 		  Trashcan t = (Trashcan) obs;
-		  Shape circle = new Ellipse2D.Double(t.getX()-50*t.getRayon(),t.getY()-50*t.getRayon(), 200*t.getRayon(),200*t.getRayon());
+		  double x=scaleFactor*t.getX();
+		  double y=scaleFactor*t.getY();
+		  double radius=scaleFactor*t.getRadius();
+		  Shape circle = new Ellipse2D.Double(x-radius,y-radius, 2*radius,2*radius);
 		  g.draw(circle);
 	  }
 	  if(obs instanceof Wall){
 		  Wall w = (Wall) obs;
-		  Shape line = new Line2D.Double(w.getX1(), w.getY1(), w.getX2(), w.getY2());
+		  double x1=scaleFactor*w.getX1();
+		  double y1=scaleFactor*w.getY1();
+		  double x2=scaleFactor*w.getX2();
+		  double y2=scaleFactor*w.getY2();
+		  Shape line = new Line2D.Double(x1, y1,x2, y2);
 		  g.draw(line);
 	  }
   }
   
-  
-  /*public static void main (String [] args) // a effacer a la fin
-  {
-    JFrame ma_fenetre = new JFrame("Cercle rouge");
-    Move m = new Move();
-    m.setPreferredSize(new Dimension(400, 400));
-    ma_fenetre.setContentPane(m);
-    ma_fenetre.pack();
-    ma_fenetre.show();
-    int x = 0;
-    boolean sens = true;
-
-    while (true)
-      {
-	m.moveRobot(x, 0);
-	if (sens)
-	  x += 1;
-	else
-	  x -= 1;
-	if (x == 0 || x == 100)
-	  sens = !sens;
-	// attend 0.01 sec
-	try  { Thread.sleep(10); }
-	catch (Exception e) {}
-	// redessine (appelle entre autres paint())
-	m.repaint();
-      }
-  }*/
+ 
 }

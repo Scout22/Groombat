@@ -4,24 +4,19 @@ public class Simulator {
 	
 
 	
-	private ArrayList <Obstacle> obstacles;
-	private ArrayList <DirtSpot> dirtSpots;
 	private ArrayList <Robot> robots;
+	private Map terrain;
 	private double width;
 	private double height;
 	private double deltaT=0.001;
 	
 	public Simulator() {
-		obstacles=new ArrayList <Obstacle>();
-		dirtSpots=new ArrayList <DirtSpot>();
+		terrain=new Map();
 		robots=new ArrayList <Robot>();
 		}
 	public Simulator(ArrayList <Obstacle> obs,ArrayList <DirtSpot> dirt,ArrayList <Robot> rob,double deltaT,double width,double height) {
-		obstacles=new ArrayList <Obstacle>();
-		dirtSpots=new ArrayList <DirtSpot>();
+		terrain=new Map(obs,dirt);
 		robots=new ArrayList <Robot>();
-		obstacles=obs;
-		dirtSpots=dirt;
 		robots=rob;
 		this.deltaT=deltaT;
 		this.width=width;
@@ -36,22 +31,29 @@ public class Simulator {
 		return height;
 	}
 	public void addDirtSpot(DirtSpot ds){
-		dirtSpots.add(ds);		
+		terrain.addDirtSpot(ds);
 	}
 	public void addObstacle(Obstacle ob){
-		obstacles.add(ob);		
+		terrain.addObstacle(ob);		
 	}
 	
 	public void updatePosAllRobot(){
-		Robot tempRobot=new Robot();
+		
 		for(Robot rob:robots){
-			tempRobot=rob;
+			Robot tempRobot=rob.clone();
 			updatePosRobot(tempRobot);
 			if(isValidPos(tempRobot)){
-				rob=tempRobot;
+				updatePosRobot(rob);
 			}
-			
 		}
+	}
+	private void updateAllSensor() {
+		for(Robot rob:robots){
+			for(Sensor sens:rob.getSensors()){
+				sens.updateState(terrain,rob);
+			}
+		}
+		
 	}
 	
 	public void updatePosRobot(Robot rob){
@@ -59,7 +61,7 @@ public class Simulator {
 		p.move(deltaT*rob.getSpeedLeft(), deltaT*rob.getSpeedRight(), rob.getDistWheel());
 	}
 	public boolean isValidPos(Robot rob){
-		for(Obstacle ob:obstacles){
+		for(Obstacle ob:terrain.getObstacles()){
 			if(ob.isCollideRobot(rob)){
 				return false;
 			}
@@ -71,14 +73,20 @@ public class Simulator {
 	}
 
 	public ArrayList<Obstacle> getObstacles() {
-		return obstacles;
+		return terrain.getObstacles();
 	}
 	public ArrayList<DirtSpot> getDirtSpots() {
-		return dirtSpots;
+		return terrain.getDirtSpots();
 	}
 	public ArrayList<Robot> getRobots() {
 		return robots;
 	}
+	public void timeStep() {
+		updatePosAllRobot();
+		updateAllSensor();
+		
+	}
+	
 
 
 }
