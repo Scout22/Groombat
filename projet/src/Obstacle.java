@@ -8,8 +8,10 @@ public abstract class Obstacle {
 		return false;
 	}
 	
-	public boolean collideRobot(Robot robot){
+	public boolean isCollideRobot(Robot robot){
 		return false;
 	}
+
+	
 
 }
