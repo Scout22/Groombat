@@ -31,12 +31,19 @@ class Move extends JPanel
   }
 
   public void paint(Graphics g) {
+	  
+	//g2.setColor(Color.red); // exemple de base
+	//g2.fillOval(x, y, 40, 40); // a supprimer
+	  
       super.paint(g);
+    
     // on recupere la zone de dessin
     Graphics2D g2 = (Graphics2D) g;
+    
     // on efface tout
     g2.setColor(Color.white);
     g2.fillRect(0, 0 , this.getHeight(), this.getWidth());
+    
     // on dessine la carte
     for(int i=0; i<this.sim.getObstacles().size(); i++){
     	paintObstacle(g2, this.sim.getObstacles().get(i));
@@ -44,15 +51,28 @@ class Move extends JPanel
     for(int i=0; i<this.sim.getDirtSpots().size(); i++){
     	paintDirtSpot(g2, this.sim.getDirtSpots().get(i)); // j'en suis la
     }
-    //g2.setColor(Color.red);
-    //g2.fillOval(x, y, 40, 40);
+    
     // on dessine les robots
+    for(int i=0; i<this.sim.getRobots().size(); i++){
+    	paintRobot(g2,this.sim.getRobots().get(i));
+    }
+    
     // on rend la main
     g2.dispose();
   }
+
+  private void paintRobot(Graphics2D g, Robot robot) {
+	  g.setColor(Color.blue);
+	  Shape circle = new Ellipse2D.Double(robot.getX(),robot.getY(), robot.getRadius(),robot.getRadius());
+	  g.draw(circle);
+	  Shape line = new Line2D.Double(robot.getX(),robot.getY(), robot.getX()+robot.getRadius()*Math.cos(Math.PI*robot.getTheta()/180), robot.getY()+robot.getRadius()*Math.sin(Math.PI*robot.getTheta()/180));
+	  g.draw(line);
+  }
+
   public void paintDirtSpot(Graphics2D g, DirtSpot dirt){
 	  g.setColor(Color.pink);
-	  
+	  Shape circle = new Ellipse2D.Double(dirt.getX(),dirt.getY(), dirt.getRadius(),dirt.getRadius());
+	  g.draw(circle);
   }
   
   
