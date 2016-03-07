@@ -33,12 +33,13 @@ public class Robot {
 	 * @param mode entier correspondant au mode de fonctionnement de l'ia du robot, 1 pour la valeur par default.
 	 * @param sensors liste des capteurs du robot.
 	 */
-	public Robot(double speedLeft, double speedRight, double x, double y, double theta, int mode, ArrayList<Sensor> sensors){
+	public Robot(double speedLeft, double speedRight, double x, double y,double theta, double radius, int mode){
 		this.speedLeft = speedLeft;
 		this.speedRight = speedRight;
 		this.posture = new Posture(x,y,theta);
 		this.ia = new IaRobot(this, mode);
-		this.sensors = sensors;
+		this.sensors = new ArrayList<Sensor>();
+		this.radius = radius;
 	}
 	
 	
@@ -80,6 +81,10 @@ public class Robot {
 
 	public void setSensors(ArrayList<Sensor> sensors) {
 		this.sensors = sensors;
+	}
+	
+	public void addSensor(Sensor sensor){
+		this.sensors.add(sensor);
 	}
 
 	public void setRadius(double radius) {
