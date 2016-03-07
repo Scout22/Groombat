@@ -9,6 +9,7 @@ public class Robot {
 	private double radius;
 	private IaRobot ia;
 	public ArrayList<Sensor> sensors;
+	private double distWheel;
 	
 	/**
 	 * Constructeur par default.
@@ -19,6 +20,7 @@ public class Robot {
 		this.speedRight = 0.0;
 		this.posture = new Posture(0.0,0.0,0.0);
 		this.radius = 0.1;
+		this.distWheel=0.1;
 		this.ia = new IaRobot(this);
 		this.sensors = new ArrayList<Sensor>();
 	}
@@ -42,6 +44,9 @@ public class Robot {
 		this.radius = radius;
 	}
 	
+	public double getDistWheel(){
+		return distWheel;
+	}
 	
 	public IaRobot getIa() {
 		return ia;

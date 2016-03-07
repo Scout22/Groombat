@@ -63,15 +63,15 @@ class Move extends JPanel
 
   private void paintRobot(Graphics2D g, Robot robot) {
 	  g.setColor(Color.blue);
-	  Shape circle = new Ellipse2D.Double(robot.getX(),robot.getY(), robot.getRadius(),robot.getRadius());
+	  Shape circle = new Ellipse2D.Double(robot.getX()-100*robot.getRadius(),robot.getY()-100*robot.getRadius(), 200*robot.getRadius(),200*robot.getRadius());
 	  g.draw(circle);
-	  Shape line = new Line2D.Double(robot.getX(),robot.getY(), robot.getX()+robot.getRadius()*Math.cos(Math.PI*robot.getTheta()/180), robot.getY()+robot.getRadius()*Math.sin(Math.PI*robot.getTheta()/180));
+	  Shape line = new Line2D.Double(robot.getX(),robot.getY(), robot.getX()+100*robot.getRadius()*Math.cos(Math.PI*(-robot.getTheta())/180), robot.getY()+100*robot.getRadius()*Math.sin(Math.PI*(-robot.getTheta())/180));
 	  g.draw(line);
   }
 
   public void paintDirtSpot(Graphics2D g, DirtSpot dirt){
 	  g.setColor(Color.pink);
-	  Shape circle = new Ellipse2D.Double(dirt.getX(),dirt.getY(), dirt.getRadius(),dirt.getRadius());
+	  Shape circle = new Ellipse2D.Double(dirt.getX()-50*dirt.getRadius(),dirt.getY()-50*dirt.getRadius(), 200*dirt.getRadius(),200*dirt.getRadius());
 	  g.draw(circle);
   }
   
@@ -80,7 +80,7 @@ class Move extends JPanel
 	  g.setColor(Color.black);
 	  if(obs instanceof Trashcan){
 		  Trashcan t = (Trashcan) obs;
-		  Shape circle = new Ellipse2D.Double(t.getX(),t.getY(), t.getRayon(),t.getRayon());
+		  Shape circle = new Ellipse2D.Double(t.getX()-50*t.getRayon(),t.getY()-50*t.getRayon(), 200*t.getRayon(),200*t.getRayon());
 		  g.draw(circle);
 	  }
 	  if(obs instanceof Wall){
