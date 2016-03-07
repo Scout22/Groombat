@@ -21,6 +21,12 @@ public abstract class Main {
 		Bumper bump = new Bumper(90,90);
 		groombat.addSensor(bump);
 		Trashcan trash = new Trashcan(500,650,0.3);
+		Wall wall1 = new Wall(0,0,0,800);
+		Wall wall2 = new Wall(0,800,800,800);
+		Wall wall3 = new Wall(800,800,800,0);
+		Wall wall4 = new Wall(800,0,0,0);
+		ArrayList<Obstacle> obs = new ArrayList<Obstacle>();
+		
 		//public Robot(double speedLeft, double speedRight, double x, double y, double theta, int mode, ArrayList<Sensor> sensors){
 		Simulator sim = new Simulator();
 		
