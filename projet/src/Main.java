@@ -1,4 +1,5 @@
 import java.awt.Dimension;
+import java.awt.geom.Line2D;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -16,17 +17,17 @@ public abstract class Main {
 	@SuppressWarnings("deprecation")
 	public static void main(String[] args) {
 
-		Robot groombat = new Robot(-0.4,-0.4,2,1,Math.toRadians(-180),0.4,1,0.2);
+		Robot groombat = new Robot(-0.4,-0.4,2,1,Math.toRadians(-45),0.4,1,0.2);
 		DirtSensor sens = new DirtSensor(0.1,180,0.05,groombat);
 		groombat.addSensor(sens);
 		
-		Bumper bump = new Bumper(180-45/2,45);
+		Bumper bump = new Bumper(180-60/2,60);
 		groombat.addSensor(bump);
 		
 		ArrayList<Robot> robs = new ArrayList<Robot>();
 		robs.add(groombat);
 		
-		Trashcan trash = new Trashcan(1,1,0.2);
+		Trashcan trash = new Trashcan(0.5,2.5,0.2);
 		Trashcan trash2 = new Trashcan(2,2,0.2);
 		Trashcan trash3 = new Trashcan(3,1,0.2);
 		Wall wall1 = new Wall(0,0,0,4);
@@ -34,15 +35,17 @@ public abstract class Main {
 		Wall wall3 = new Wall(4,4,4,0);
 		Wall wall4 = new Wall(0,0,4,0);
 		Wall wall5 = new Wall(2,2,2,4);
+		Wall wall6 = new Wall(0,0,4,4);
 		ArrayList<Obstacle> obs = new ArrayList<Obstacle>();
 		obs.add(trash);
-		obs.add(trash2);
+		//obs.add(trash2);
 		//obs.add(trash3);
 		obs.add(wall1);
 		obs.add(wall2);
 		obs.add(wall3);
 		obs.add(wall4);
 		obs.add(wall5);
+		obs.add(wall6);
 		
 		DirtSpot dirt = new DirtSpot(1.5,3,0.2);
 		ArrayList<DirtSpot> dirts = new ArrayList<DirtSpot>();
