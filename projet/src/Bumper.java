@@ -17,6 +17,7 @@ public class Bumper extends Sensor {
 		this.angleInit = 0.0;
 		this.span = 0.0;
 		this.triggered = false;
+		this.type="Bumper";
 	}
 
 	/**
@@ -28,9 +29,10 @@ public class Bumper extends Sensor {
 	
 	public Bumper(double angleInit, double span) {
 		this.angleInit = Math.toRadians(angleInit%360);
+		/*
 		if(angleInit<0){
 			angleInit=Math.PI+angleInit;
-		}
+		}*/
 		this.span = Math.toRadians(span);
 		this.triggered = false;
 	}
@@ -54,7 +56,7 @@ public class Bumper extends Sensor {
 				break;
 			case "Trashcan":
 				Trashcan tc=(Trashcan)ob;
-				triggered=Collision.ArcCircle(new Point2D.Double(robot.getX(), robot.getY()), robot.getRadius()+thickness, (robot.getTheta()+ angleInit)%(2*Math.PI), span, tc.getPt(),tc.getRadius());
+				triggered=Collision.ArcCircle(new Point2D.Double(robot.getX(), robot.getY()), robot.getRadius()+thickness, (-robot.getTheta()+ angleInit)%(2*Math.PI), span, tc.getPt(),tc.getRadius());
 				break;
 			default:
 			}

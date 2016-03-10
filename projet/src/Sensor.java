@@ -1,18 +1,17 @@
 
 public abstract class Sensor {
-
+	protected String type;
 	public Sensor() {
-		
+		type="";
 	}
-
-	
-	
 	/**
-	 * Indique si le capteur est active par un element de la carte
-	 * retourne faux par default
-	 * @param map carte parcourue par le robot
+	 * Met a jour l'etat du capteur
+	 * @param map carte de l'environement ou se trouve le robot
 	 */
-	public void updateState(Map map,Robot rob ){
+	public abstract void updateState(Map map,Robot rob );
+	
+	public String getType(){
+		return type;
 	}
 }
 

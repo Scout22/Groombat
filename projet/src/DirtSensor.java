@@ -1,3 +1,4 @@
+import java.awt.geom.Point2D;
 
 public class DirtSensor extends Sensor {
 	
@@ -16,6 +17,7 @@ public class DirtSensor extends Sensor {
 		this.angle = 0.0;
 		this.sensorRadius = 0.0;
 		this.triggered = false;
+		type="DirtSensor";
 	}
 
 	/**
@@ -88,5 +90,27 @@ public class DirtSensor extends Sensor {
 
 	public void setTriggered(boolean triggered) {
 		this.triggered = triggered;
+	}
+
+	@Override
+	public void updateState(Map map, Robot rob) {
+		Point2D.Double absPos=getAbsPos( rob);
+		for(DirtSpot ds:map.getDirtSpots()){
+			triggered=Collision.CircleCircle(absPos, sensorRadius, ds.getPt(), ds.getRadius());
+			if(triggered){
+				break;
+			}
+		}
+		
+	}
+	
+	public Point2D.Double getAbsPos(Robot rob){
+		return new Point2D.Double(rob.getX()+Math.cos(angle+rob.getTheta())*radiusInRobot,rob.getY()-Math.sin(angle+rob.getTheta())*radiusInRobot);
+		
+	}
+	
+	public Point2D.Double getRelativePos(){
+		return new Point2D.Double(Math.cos(angle)*radiusInRobot,Math.sin(angle)*radiusInRobot);
+		
 	}
 }

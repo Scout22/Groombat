@@ -71,7 +71,7 @@ public class Posture implements Cloneable
 	/**
 	 * return l'angle remis dans [-PI;PI]
 	 */
-	protected double normalize_angle(double a)
+	public static double normalize_angle(double a)
 	{
 		while (a > Math.PI)
 			a -= 2 * Math.PI;

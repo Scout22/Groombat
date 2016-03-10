@@ -1,7 +1,7 @@
 import java.awt.geom.*;
 
 public abstract class Collision {
-	private static double precision=-0.007;
+	private static double precision=-0.015;
 	public static boolean CircleLine(Point2D.Double c,double r,Line2D.Double line){
 		if(line.ptSegDist(c)+precision<=r){
 			return true;
@@ -25,33 +25,40 @@ public abstract class Collision {
 	public static boolean ArcCircle(Point2D.Double ac,double ar,double angleMin,double angleSpan,Point2D.Double c,double r){
 		if(CircleCircle(c,r,ac,ar)){
 			//Calcule de l'angle entre le vecteur AB et l'axe X 
-			double angleContact=Math.atan2(ac.getY()-c.getY(),ac.getX()-c.getX());
-
+			double angleContact=Math.atan2(+ac.getY()-c.getY(),+ac.getX()-c.getX());
+/*
 			if(angleContact<0){
 				angleContact=2*Math.PI+angleContact;
-			}
-			angleContact=(angleContact+Math.PI)%(2*Math.PI);
-			if(angleContact>angleMin && angleContact<(angleMin+angleSpan)){
+			}*/
+			angleContact=Posture.normalize_angle(angleContact);
+			angleMin=Posture.normalize_angle(angleMin);
+			
+			//angleContact=(angleContact+Math.PI)%(2*Math.PI);
+			if(angleContact>=angleMin && angleContact<(angleMin+angleSpan)){
 				return true;
 			}
 		}
 		return false;
 	}
 	public static boolean ArcLine(Point2D.Double ac,double ar,double angleMin,double angleSpan,Line2D.Double line){
-		if(line.ptSegDist(ac)+precision<=ar){
-			Line2D.Double ln=normalise(LeftNormal(line),ar); //Vecteur normale a la ligne
-			Line2D.Double lnc=new Line2D.Double(ac.getX(),ac.getY(),ac.getX()+ln.getX2(),ac.getY()+ln.getY2());//Normale a la ligne avec centre du cercle comme extremité
-			
-			double angleContact=Math.atan2(lnc.getY1()-lnc.getY2(),lnc.getX1()-lnc.getX2());
+		if(line.ptSegDist(ac)+2*precision<=ar){
 
+			Line2D.Double ln=normalise(LeftNormal(line),ar); //Vecteur normale a la ligne
+
+			Line2D.Double lnc=new Line2D.Double(ac.getX(),ac.getY(),ac.getX()+ln.getX2(),ac.getY()+ln.getY2());//Normale a la ligne avec centre du cercle comme extremité
+
+			double angleContact=Math.atan2(-(lnc.getY1()-lnc.getY2()),lnc.getX1()-lnc.getX2());
+			if(dotProduct(lnc,new Line2D.Double(ac,new Point2D.Double(ac.getX()+ar,ac.getY())))<0){
+				angleContact=(angleContact+Math.PI)%(2*Math.PI);
+			}
 			if(angleContact<0){
 				angleContact=2*Math.PI+angleContact;
 			}
-			angleContact=(angleContact+Math.PI)%(2*Math.PI);
+			
 			if(angleContact>angleMin){
 				if(angleContact<(angleMin+angleSpan)){
-				return true;
-			}}
+					return true;
+				}}
 		}
 		return false;
 

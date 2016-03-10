@@ -1,3 +1,4 @@
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 public class Map {
@@ -21,6 +22,11 @@ public class Map {
 	public void addDirtSpot(DirtSpot ds){
 		dirtSpots.add(ds);
 		
+	}
+	public void cleanDirtSpot(Robot rob,double d){
+		for(DirtSpot ds:dirtSpots){
+			if(Collision.CircleCircle(new Point2D.Double(rob.getX(), rob.getY()), rob.getRadius(), ds.getPt(), ds.getRadius())){
+				ds.clean(d);}}
 	}
 	
 	public ArrayList<Obstacle> getObstacles(){
