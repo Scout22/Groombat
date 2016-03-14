@@ -52,7 +52,7 @@ public class Bumper extends Sensor {
 			switch (ob.getType()){
 			case "Wall":
 				Wall w=(Wall)ob;
-				triggered=Collision.ArcLine(new Point2D.Double(robot.getX(), robot.getY()), robot.getRadius()+thickness,(robot.getTheta()+ angleInit)%(2*Math.PI), span, w.getLine());
+				triggered=Collision.ArcLine(new Point2D.Double(robot.getX(), robot.getY()), robot.getRadius()+thickness,(-robot.getTheta()+ angleInit)%(2*Math.PI), span, w.getLine());
 				break;
 			case "Trashcan":
 				Trashcan tc=(Trashcan)ob;

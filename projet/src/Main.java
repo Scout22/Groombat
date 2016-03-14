@@ -18,11 +18,12 @@ public abstract class Main {
 	public static void main(String[] args) {
 
 		//Robot groombat = new Robot(-0.4,-0.5,2,1,Math.toRadians(0),0.4,1,0.2);
-		Robot groombat = new Robot(-0.4,-0.4,2,1,Math.toRadians(0),0.4,1,0.2);
+		//Robot groombat = new Robot(-0.4,-0.4,2,1,Math.toRadians(0),0.4,1,0.2);
 		//Robot groombat = new Robot(0.4,0.4,2,1,Math.toRadians(0),0.4,1,0.2);
 		//Robot groombat = new Robot(-0.5,-0.4,2,1,Math.toRadians(0),0.4,1,0.2);
 		//Robot groombat = new Robot(0.4,0.5,2,1,Math.toRadians(0),0.4,1,0.2);
 		//Robot groombat = new Robot(0,0,2,1,0,0.4,1,0.2);
+		Robot groombat = new Robot(0,0,0.5,1,0,0.4,2,0.2);
 		
 		DirtSensor sens = new DirtSensor(0.1,-2*Math.PI/3,0.05,groombat);
 		groombat.addSensor(sens);
@@ -56,7 +57,7 @@ public abstract class Main {
 		//obs.add(wall5);
 		//obs.add(wall6);
 		
-		DirtSpot dirt = new DirtSpot(1,1,0.2);
+		DirtSpot dirt = new DirtSpot(1,1,0.4);
 		ArrayList<DirtSpot> dirts = new ArrayList<DirtSpot>();
 		dirts.add(dirt);
 		
@@ -73,6 +74,9 @@ public abstract class Main {
 	    
 	    while (true){
 	    	//m.moveRobot(0, 0);
+	    	for(Robot rob:sim.getRobots()){
+	    		rob.getIa().start();
+	    	}
 	    	sim.timeStep();
 	    	// attend 0.01 sec
 	    	try  { Thread.sleep(10); }
