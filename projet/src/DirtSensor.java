@@ -45,21 +45,6 @@ public class DirtSensor extends Sensor {
 		}
 	}
 
-	/** 
-	 * Indique si le capteur est actif car au dessus d'une tache.
-	 * @param map carte contenant la liste des taches.
-	 */
-	
-	public void isTriggered(Map map, Robot robot){
-		this.triggered = false;
-		for(int i=0; i<map.getDirtSpots().size(); i++){
-			if(map.getDirtSpots().get(i).colliderSensor(this.radiusInRobot, this.angle, this.sensorRadius)){
-				this.triggered = true;
-				return;
-			}
-		}
-	}
-
 	public double getRadiusInRobot() {
 		return radiusInRobot;
 	}
@@ -92,8 +77,14 @@ public class DirtSensor extends Sensor {
 		this.triggered = triggered;
 	}
 
+	/** 
+	 * Indique si le capteur est actif car au dessus d'une tache.
+	 * @param map carte contenant la liste des taches.
+	 * @param rob robot qui contient le capteur
+	 */
 	@Override
 	public void updateState(Map map, Robot rob) {
+		triggered = false;
 		Point2D.Double absPos=getAbsPos( rob);
 		for(DirtSpot ds:map.getDirtSpots()){
 			triggered=Collision.CircleCircle(absPos, sensorRadius, ds.getPt(), ds.getRadius());

@@ -1,7 +1,9 @@
 import java.awt.geom.*;
 
 public abstract class Collision {
+
 	private static double precision=0;
+
 	public static boolean CircleLine(Point2D.Double c,double r,Line2D.Double line){
 		if(line.ptSegDist(c)+precision<=r){
 			return true;
@@ -37,6 +39,7 @@ public abstract class Collision {
 	}
 	public static boolean ArcLine(Point2D.Double ac,double ar,double angleMin,double angleSpan,Line2D.Double line){
 		if(line.ptSegDist(ac)+2*precision<=ar){
+
 			Line2D.Double ln;
 			if(isLeft(line,ac)){
 				ln=normalise(LeftNormal(line),ar); //Vecteur normale a la ligne
@@ -45,6 +48,7 @@ public abstract class Collision {
 				ln=normalise(RightNormal(line),ar);
 			}
 			Line2D.Double lnc=new Line2D.Double(ac.getX(),ac.getY(),ac.getX()+ln.getX2(),ac.getY()+ln.getY2());//Normale a la ligne avec centre du cercle comme extremité
+
 
 			double angleContact=Math.atan2(-(lnc.getY1()-lnc.getY2()),lnc.getX1()-lnc.getX2());
 

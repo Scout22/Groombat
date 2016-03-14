@@ -24,9 +24,17 @@ public class Map {
 		
 	}
 	public void cleanDirtSpot(Robot rob,double d){
+		ArrayList<DirtSpot> destroy = new ArrayList<DirtSpot>();
 		for(DirtSpot ds:dirtSpots){
 			if(Collision.CircleCircle(new Point2D.Double(rob.getX(), rob.getY()), rob.getRadius(), ds.getPt(), ds.getRadius())){
-				ds.clean(d);}}
+				if(ds.clean(d)){
+					destroy.add(ds);
+				}
+			}
+		}
+		for(DirtSpot dest:destroy){
+			dirtSpots.remove(dest);
+		}
 	}
 	
 	public ArrayList<Obstacle> getObstacles(){
