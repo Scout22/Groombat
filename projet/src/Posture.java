@@ -1,3 +1,6 @@
+import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
+
 /**
  * Represente une position x,y + un angle
  */
@@ -28,6 +31,25 @@ public class Posture implements Cloneable
 		y = y_;
 		theta = normalize_angle(alpha + theta);
 		return this;
+	}
+	
+	public static Line2D.Double rotate(Line2D.Double org,Point2D.Double c,double alpha){
+		double x1 = org.getX1();
+		double y1 = org.getY1();
+		double x2 = org.getX2();
+		double y2 = org.getY2();
+		double a = c.getX();
+		double b = c.getY();
+		double X1 = x1 - a;
+		double	Y1 = y1 - b;
+		double X2 = x2 - a;
+		double	Y2 = y2 - b;
+		double x1Bis = a + X1 * Math.cos(alpha) - Y1 * Math.sin(alpha);
+		double y1Bis = b + X1 * Math.sin(alpha) + Y1 * Math.cos(alpha);
+		double x2Bis = a + X2 * Math.cos(alpha) - Y2 * Math.sin(alpha);
+		double y2Bis = b + X2 * Math.sin(alpha) + Y2 * Math.cos(alpha);
+		return new Line2D.Double(x1Bis,y1Bis,x2Bis,y2Bis);
+		
 	}
 	/**
 	 * Deplace un robot en fonction de la distance parcourue par 
@@ -67,6 +89,25 @@ public class Posture implements Cloneable
 	public String toString()
 	{
 		return x + " " + y + " " + theta;
+	}
+	
+	
+	public static boolean isAngleInSpan(Double angleContact,Double angleMin,Double angleSpan){
+		//Cas Basique en dehors bumper n'incluant pas le point pi
+		if(!(angleMin>0 && angleMin*Posture.normalize_angle(angleMin+angleSpan)<0)){
+
+			if(angleContact>=angleMin){
+				if(angleContact<(angleMin+angleSpan)){
+					return true;
+				}}}
+
+		//Cas ou l'on se trouve au dessus d'une discontinuité
+		else{
+			if((angleContact>=angleMin && angleContact<=Math.PI )||( angleContact<=Posture.normalize_angle(angleMin+angleSpan) && angleContact>=-Math.PI) ){
+
+				return true;
+			}}
+		return false;
 	}
 	/**
 	 * return l'angle remis dans [-PI;PI]

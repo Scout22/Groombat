@@ -67,8 +67,9 @@ class Move extends JPanel
 
 		AffineTransform old = g.getTransform();
 		AffineTransform tr2= new AffineTransform();
+		
 
-		tr2.rotate(theta, x, y);
+		tr2.rotate(-theta, x, y);
 		g.transform(tr2);
 		g.drawImage(img0,(int)(x-radius),(int)(y-radius),(int)(2*radius),(int)(2*radius),null);
 		g.setColor(Color.RED);
@@ -84,7 +85,7 @@ class Move extends JPanel
 				else{
 					g.setColor(Color.CYAN);
 				}
-				g.drawArc((int)(x-radius),(int)(y-radius),(int)(2*radius),(int)(2*radius),(int)Math.toDegrees(bump.angleInit),(int)Math.toDegrees(bump.span));
+				g.drawArc((int)(x-radius),(int)(y-radius),(int)(2*radius),(int)(2*radius),-(int)Math.toDegrees(bump.angleInit),-(int)Math.toDegrees(bump.span));
 			}
 			else if(sens instanceof DirtSensor){
 				DirtSensor ds=(DirtSensor)sens;

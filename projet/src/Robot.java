@@ -84,6 +84,8 @@ public class Robot {
 	public Posture getPosture() {
 		return posture;
 	}
+	
+	
 
 	public void setPosture(Posture posture) {
 		this.posture = posture;

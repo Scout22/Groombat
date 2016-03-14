@@ -6,7 +6,7 @@ public class Bumper extends Sensor {
 	protected double angleInit;
 	protected double span;
 	protected boolean triggered;
-	private static double thickness=0.002;
+	private static double thickness=0.005;
 	
 	/**
 	 * Constructeur par default.
@@ -45,6 +45,7 @@ public class Bumper extends Sensor {
 	
 	public void updateState(Map terrain, Robot robot){
 		triggered=false;
+		Point2D.Double robPos=new Point2D.Double(robot.getX(), robot.getY());
 		for(Obstacle ob:terrain.getObstacles()){
 			if(triggered){
 				break;
@@ -52,11 +53,12 @@ public class Bumper extends Sensor {
 			switch (ob.getType()){
 			case "Wall":
 				Wall w=(Wall)ob;
-				triggered=Collision.ArcLine(new Point2D.Double(robot.getX(), robot.getY()), robot.getRadius()+thickness,(robot.getTheta()+ angleInit)%(2*Math.PI), span, w.getLine());
+				triggered=Collision.ArcLine(robPos, robot.getRadius()+thickness,Posture.normalize_angle(angleInit-robot.getTheta()), span, w.getLine());
+				
 				break;
 			case "Trashcan":
 				Trashcan tc=(Trashcan)ob;
-				triggered=Collision.ArcCircle(new Point2D.Double(robot.getX(), robot.getY()), robot.getRadius()+thickness, (-robot.getTheta()+ angleInit)%(2*Math.PI), span, tc.getPt(),tc.getRadius());
+				triggered=Collision.ArcCircle(robPos, robot.getRadius()+thickness, Posture.normalize_angle(angleInit-robot.getTheta()), span, tc.getPt(),tc.getRadius());
 				break;
 			default:
 			}
