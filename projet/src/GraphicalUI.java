@@ -8,19 +8,27 @@ import javax.swing.*;
 // Pour les details sur les fonctions de dessin, voir :
 // http://java.sun.com/j2se/1.5.0/docs/api/java/awt/Graphics.html
 // voir aussi : http://java.sun.com/docs/books/tutorial/2d/index.html
-class Move extends JPanel 
+@SuppressWarnings("serial")
+class GraphicalUI extends UI 
 {
 	private Simulator sim;
-	private double scaleFactor;
+	private static double scaleFactor=200;
 	private Image img0;
+	JFrame ma_fenetre ;
 
-	public Move(Simulator sim, double sf)
+	public GraphicalUI(Simulator sim)
 	{
 		img0 = Toolkit.getDefaultToolkit().getImage("a.png");
-		scaleFactor=sf;
 		this.sim = sim;
 		setBackground(Color.white);
 		setOpaque(true);
+		
+		ma_fenetre = new JFrame("Groombat");
+	    setPreferredSize(new Dimension((int)(scaleFactor*sim.getWidth()),(int)(scaleFactor*sim.getHeight())));
+	    ma_fenetre.setContentPane(this);
+	    ma_fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    ma_fenetre.pack();
+	    ma_fenetre.setVisible(true);
 	}
 
 
@@ -139,6 +147,18 @@ class Move extends JPanel
 			g.draw(line);
 		}
 	}
+
+
+
+	@Override
+	void updateDisplay() {
+		repaint();
+		
+	}
+
+
+
+	
 
 
 }

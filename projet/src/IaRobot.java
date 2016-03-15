@@ -78,7 +78,7 @@ public class IaRobot {
 					counter++;
 				}
 			}
-			System.out.println("Counter = " + counter + " and length = " + freeAngles.length + "and free0 : "+freeAngles[(int)freeAngles.length/4]);
+			//System.out.println("Counter = " + counter + " and length = " + freeAngles.length + "and free0 : "+freeAngles[(int)freeAngles.length/4]);
 			if(counter == freeAngles.length || freeAngles[(int)freeAngles.length/4]){
 				this.robot.setSpeedLeft(1); 
 				this.robot.setSpeedRight(1);
@@ -141,7 +141,7 @@ public class IaRobot {
 					counter++;
 				}
 			}
-			System.out.println("Counter = " + counter + " and length = " + freeAngles.length + "and free0 : "+freeAngles[(int)freeAngles.length/4]);
+			//System.out.println("Counter = " + counter + " and length = " + freeAngles.length + "and free0 : "+freeAngles[(int)freeAngles.length/4]);
 			if(counter == freeAngles.length || freeAngles[(int)freeAngles.length/4]){
 				this.robot.setSpeedLeft(1); 
 				this.robot.setSpeedRight(1);

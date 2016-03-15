@@ -1,5 +1,4 @@
 import java.awt.geom.Point2D;
-import java.util.ArrayList;
 
 public class Bumper extends Sensor {
 
@@ -62,9 +61,7 @@ public class Bumper extends Sensor {
 			default:
 			}
 		}
-		if(triggered){
-			System.out.println("Sensor triggered");
-		}
+		
 	}
 
 	public boolean isTriggered() {
@@ -77,6 +74,11 @@ public class Bumper extends Sensor {
 
 	public double getSpan() {
 		return span;
+	}
+
+	@Override
+	public String toString() {
+		return "Bumper from:"+angleInit+", span:"+span+" etat: "+(triggered?"actif":"inactif");
 	}
 
 

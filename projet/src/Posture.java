@@ -88,7 +88,7 @@ public class Posture implements Cloneable
 
 	public String toString()
 	{
-		return x + " " + y + " " + theta;
+		return "x: "+ x + " y: " + y + " alpha: " + theta;
 	}
 	
 	

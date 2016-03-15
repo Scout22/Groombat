@@ -13,5 +13,8 @@ public abstract class Sensor {
 	public String getType(){
 		return type;
 	}
+	
+	public abstract String toString();
+		
 }
 

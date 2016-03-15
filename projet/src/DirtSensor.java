@@ -31,7 +31,7 @@ public class DirtSensor extends Sensor {
 	 */	
 	public DirtSensor(double radiusInRobot, double angle, double sensorRadius, Robot robot) {
 		if(radiusInRobot + sensorRadius > robot.getRadius()){
-			System.out.println("Error creating DirtSensor : sensor outside robot boudaries, setting to default (null)");
+			//System.out.println("Error creating DirtSensor : sensor outside robot boudaries, setting to default (null)");
 			this.radiusInRobot = 0.0;
 			this.angle = 0.0;
 			this.sensorRadius = 0.0;
@@ -103,5 +103,11 @@ public class DirtSensor extends Sensor {
 	public Point2D.Double getRelativePos(){
 		return new Point2D.Double(Math.cos(angle)*radiusInRobot,Math.sin(angle)*radiusInRobot);
 		
+	}
+
+	@Override
+	public String toString() {
+		
+		return "DirtSensor etat: "+(triggered?"actif":"inactif");
 	}
 }
