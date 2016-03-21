@@ -5,7 +5,7 @@ public class Bumper extends Sensor {
 	protected double angleInit;
 	protected double span;
 	protected boolean triggered;
-	private static double thickness=0.005;
+	private static double thickness=0.01;
 
 	/**
 	 * Constructeur par default.
@@ -52,11 +52,11 @@ public class Bumper extends Sensor {
 			switch (ob.getType()){
 			case "Wall":
 				Wall w=(Wall)ob;
-				triggered=Collision.ArcLine(robPos, robot.getRadius()+thickness,Posture.normalize_angle(angleInit-robot.getTheta()), span, w.getLine());
+				triggered=Collision.ArcLine(robPos, robot.getRadius()+thickness,Posture.normalize_angle(angleInit+robot.getTheta()), span, w.getLine());
 				break;
 			case "Trashcan":
 				Trashcan tc=(Trashcan)ob;
-				triggered=Collision.ArcCircle(robPos, robot.getRadius()+thickness, Posture.normalize_angle(angleInit-robot.getTheta()), span, tc.getPt(),tc.getRadius());
+				triggered=Collision.ArcCircle(robPos, robot.getRadius()+thickness, Posture.normalize_angle(angleInit+robot.getTheta()), span, tc.getPt(),tc.getRadius());
 				break;
 			default:
 			}

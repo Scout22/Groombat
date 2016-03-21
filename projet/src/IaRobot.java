@@ -5,8 +5,8 @@ public class IaRobot {
 
 	Robot robot;
 	int mode;
-	private boolean is_Rotating = false;
-	private double angle_Goal = 0;
+	private boolean is_Rotating_Left = false;
+	private boolean is_Rotating_Right = false;
 	
 	// completer avec le fonctionnement du mode 1
 	/**
@@ -48,54 +48,35 @@ public class IaRobot {
 			this.robot.setSpeedLeft(0); 
 			this.robot.setSpeedRight(0);
 		}
-		else if(this.is_Rotating){
-			if(this.angle_Goal < this.robot.getPosture().getTheta()+0.1 && this.angle_Goal > this.robot.getPosture().getTheta()-0.1){
-				this.is_Rotating = false;
-				this.angle_Goal = 0;
-			}
-			else if(this.angle_Goal - this.robot.getPosture().getTheta() <Math.PI){
-				rotateLeft();
-			}
-			else{
-				rotateRight();
-			}
-		}
 		else{
-			boolean[] freeAngles = new boolean[72]; // tableau des angles libres, 5° de precision
-			for(int i=0; i<freeAngles.length; i++){
-				freeAngles[i] = true;
-			}
+			boolean all_clear = true;
 			for(int i=0; i<this.robot.sensors.size(); i++){
 				if(this.robot.sensors.get(i) instanceof Bumper){
-					this.blockAngles(freeAngles, (Bumper)this.robot.sensors.get(i));
+					if(!this.front_clear((Bumper)this.robot.sensors.get(i))){
+						all_clear = false;
+					}
 				}
 			}
-			int[] directions = new int[72];
-			int counter = 0;
-			for(int i=0; i<freeAngles.length; i++){
-				if(freeAngles[i]){
-					directions[counter] = i*360/freeAngles.length;
-					counter++;
-				}
-			}
-			//System.out.println("Counter = " + counter + " and length = " + freeAngles.length + "and free0 : "+freeAngles[(int)freeAngles.length/4]);
-			if(counter == freeAngles.length || freeAngles[(int)freeAngles.length/4]){
+
+			if(all_clear){
 				this.robot.setSpeedLeft(1); 
 				this.robot.setSpeedRight(1);
+				is_Rotating_Left = false;
+				is_Rotating_Right = false;
 			}
 			else{
 				Random r = new Random();
-				double angle = directions[r.nextInt(counter)];
-				this.angle_Goal = (Math.PI*angle)/180;
-				if(this.angle_Goal - this.robot.getPosture().getTheta() <Math.PI){
+				int ran = r.nextInt(2);
+				if(!is_Rotating_Right && (ran==0 || is_Rotating_Left)){
 					rotateLeft();
+					is_Rotating_Left = true;
 				}
 				else{
 					rotateRight();
+					is_Rotating_Right = true;
 				}
 			}
 		}
-		
 	}
 
 	private boolean is_On_Dirt() {
@@ -111,56 +92,30 @@ public class IaRobot {
 	}
 
 	private void yolo(){
-		if(this.is_Rotating){
-			if(this.angle_Goal < this.robot.getPosture().getTheta()+0.1 && this.angle_Goal > this.robot.getPosture().getTheta()-0.1){
-				this.is_Rotating = false;
-				this.angle_Goal = 0;
+		boolean all_clear = true;
+		for(int i=0; i<this.robot.sensors.size(); i++){
+			if(this.robot.sensors.get(i) instanceof Bumper){
+				if(!this.front_clear((Bumper)this.robot.sensors.get(i))){
+					all_clear = false;
+				}
 			}
-			else if(this.angle_Goal - this.robot.getPosture().getTheta() <Math.PI){
-				rotateLeft();
-			}
-			else{
-				rotateRight();
-			}
+		}
+
+		if(all_clear){
+			this.robot.setSpeedLeft(1); 
+			this.robot.setSpeedRight(1);
 		}
 		else{
-			boolean[] freeAngles = new boolean[72]; // tableau des angles libres, 5° de precision
-			for(int i=0; i<freeAngles.length; i++){
-				freeAngles[i] = true;
-			}
-			for(int i=0; i<this.robot.sensors.size(); i++){
-				if(this.robot.sensors.get(i) instanceof Bumper){
-					this.blockAngles(freeAngles, (Bumper)this.robot.sensors.get(i));
-				}
-			}
-			int[] directions = new int[72];
-			int counter = 0;
-			for(int i=0; i<freeAngles.length; i++){
-				if(freeAngles[i]){
-					directions[counter] = i*360/freeAngles.length;
-					counter++;
-				}
-			}
-			//System.out.println("Counter = " + counter + " and length = " + freeAngles.length + "and free0 : "+freeAngles[(int)freeAngles.length/4]);
-			if(counter == freeAngles.length || freeAngles[(int)freeAngles.length/4]){
-				this.robot.setSpeedLeft(1); 
-				this.robot.setSpeedRight(1);
-			}
-			else{
-				Random r = new Random();
-				double angle = directions[r.nextInt(counter)];
-				this.angle_Goal = (Math.PI*angle)/180;
-				//this.angle_Goal = 0; // bullshit
-				if(this.angle_Goal - this.robot.getPosture().getTheta() <Math.PI){
-					rotateLeft();
-				}
-				else{
-					rotateRight();
-				}
-			}
+			rotateLeft();
 		}
 	}
+
 	
+	private boolean front_clear(Bumper bumper) {
+		boolean res = bumper.isTriggered() && (Posture.isAngleInSpan(bumper.getAngleInit(), -Math.PI/2, Math.PI) || Posture.isAngleInSpan(Posture.normalize_angle(bumper.getAngleInit()+bumper.getSpan()), -Math.PI/2, Math.PI));
+		return !res;
+	}
+
 	private void rotateRight() {
 		this.robot.setSpeedLeft(-1);
 		this.robot.setSpeedRight(1);	
@@ -169,18 +124,5 @@ public class IaRobot {
 	private void rotateLeft() {
 		this.robot.setSpeedLeft(1);
 		this.robot.setSpeedRight(-1);	
-	}
-
-	private void blockAngles(boolean[] freeAngles, Bumper sensor){
-		if(freeAngles.length <1){
-			System.out.println("Error trying to block angles, freeAngles length is null, returning");
-			return;
-		}
-		int precision = 360/freeAngles.length;
-		for(int i=0; i<freeAngles.length; i++){
-			if(i*precision > (sensor.getAngleInit()-precision) && i*precision < (sensor.getAngleInit()+sensor.getSpan()+precision) && sensor.isTriggered()){
-				freeAngles[i] = false;
-			}
-		}
 	}
 }

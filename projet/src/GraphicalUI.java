@@ -77,7 +77,7 @@ class GraphicalUI extends UI
 		AffineTransform tr2= new AffineTransform();
 		
 
-		tr2.rotate(-theta, x, y);
+		tr2.rotate(theta, x, y);
 		g.transform(tr2);
 		g.drawImage(img0,(int)(x-radius),(int)(y-radius),(int)(2*radius),(int)(2*radius),null);
 		g.setColor(Color.RED);

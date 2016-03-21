@@ -20,9 +20,10 @@ public abstract class Main {
 
 
 		//Robot groombat = new Robot(-0.4,-0.5,2,1,Math.toRadians(0),0.4,1,0.2);
-		//Robot groombat = new Robot(0.4,0.4,2,1,Math.toRadians(0),0.4,1,0.2);
+		//Robot groombat = new Robot(0.4,0.4,2,1,Math.toRadians(270),0.4,1,0.2);
 		//Robot groombat = new Robot(-0.4,-0.4,2,1,Math.toRadians(0),0.4,1,0.2);
-		Robot groombat = new Robot(0.4,0.5,2,1,Math.toRadians(145),0.4,1,0.2);
+		//Robot groombat = new Robot(0.4,0.5,2,1,Math.toRadians(145),0.4,2,0.2);
+		Robot groombat = new Robot(0.1,0.1,2,1,Math.toRadians(89),0.4,2,0.2);
 		//Robot groombat = new Robot(-0.5,-0.4,2,1,Math.toRadians(0),0.4,1,0.2);
 		//Robot groombat = new Robot(0.4,0.5,2,1,Math.toRadians(0),0.4,1,0.2);
 		//Robot groombat = new Robot(0,0,2,1,Math.toRadians(0),0.4,1,0.2);
@@ -33,14 +34,14 @@ public abstract class Main {
 		DirtSensor sens = new DirtSensor(0.1,-2*Math.PI/3,0.05,groombat);
 		groombat.addSensor(sens);
 
-		for(int i=-1;i<360;i+=10){
+		for(int i=-11;i<360;i+=10){
 			Bumper bump = new Bumper(i,11);
 			groombat.addSensor(bump);}
 	
 		Trashcan trash = new Trashcan(0.5,2.5,0.2);
 		Trashcan trash2 = new Trashcan(2,2,0.2);
 		Trashcan trash3 = new Trashcan(3,1,0.2);
-		Trashcan trash4 = new Trashcan(1,1,0.2);
+		//Trashcan trash4 = new Trashcan(1,1,0.2);
 		Wall wall1 = new Wall(0,0,0,4);
 		Wall wall2 = new Wall(0,4,4,4);
 		Wall wall3 = new Wall(4,4,4,0);
@@ -52,7 +53,7 @@ public abstract class Main {
 		obs.add(trash);
 		obs.add(trash2);
 		obs.add(trash3);
-		obs.add(trash4);
+		//obs.add(trash4);
 		obs.add(wall1);
 		obs.add(wall2);
 		obs.add(wall3);
@@ -73,6 +74,7 @@ public abstract class Main {
 
 
 		while (true){
+			
 			//Actualise la commande 
 			for(Robot rob:sim.getRobots()){
 				rob.getIa().start();
