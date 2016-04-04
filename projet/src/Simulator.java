@@ -93,6 +93,9 @@ public class Simulator {
 		updateTerrain();
 
 	}
+	public double getDeltaT() {
+		return deltaT;
+	}
 
 
 
