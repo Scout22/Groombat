@@ -8,7 +8,6 @@ public class IaRobot {
 	private boolean is_Rotating_Left = false;
 	private boolean is_Rotating_Right = false;
 	
-	// completer avec le fonctionnement du mode 1
 	/**
 	 * Constructeur par defaut.
 	 * Le mode de l'IA est mis a 1 (mode yolo).
@@ -19,7 +18,6 @@ public class IaRobot {
 		this.robot = robot;
 	}
 	
-	//a completer avec les differents modes de fonctionnement
 	/**
 	 * Constructeur de l'IA.
 	 * Les differents modes : (1) mode yolo (2) mode cleaner, le robot s'arrete sur les taches
@@ -32,6 +30,10 @@ public class IaRobot {
 		this.mode = mode;
 	}
 
+	/**
+	 * Initialisation pour un pas de temps de l'IA d'un robot.
+	 * Donne au final une vitesse aux deux roues du robot.
+	 */
 	public void start(){
 		switch(this.mode){
 		case 1:
@@ -43,6 +45,11 @@ public class IaRobot {
 		}
 	}
 	
+	
+	/**
+	 * Mode cleaner de l'IA.
+	 * Le robot cherche aleatoirement les taches et s'arrete quand il passe dessus.
+	 */
 	private void cleaner() {
 		if(is_On_Dirt()){
 			this.robot.setSpeedLeft(0); 
@@ -79,6 +86,10 @@ public class IaRobot {
 		}
 	}
 
+	
+	/**
+	 * Test si le robot associe a cet IA est sur une tâche
+	 */
 	private boolean is_On_Dirt() {
 		for(Sensor sensor:this.robot.getSensors()){
 			if(sensor instanceof DirtSensor){
