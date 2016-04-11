@@ -5,9 +5,12 @@ public class Trashcan extends Obstacle {
 	private double y;
 	private double rayon;
 	
-
-	
-	
+	/**
+	 * Instancie un obstacle de type poubelle.
+	 * @param x position en x du centre de la poubelle.
+	 * @param y position en y du centre de la poubelle.
+	 * @param rayon rayon de la poubelle.
+	 */
 	Trashcan(double x, double y, double rayon){
 		type="Trashcan";
 		this.x=x;
@@ -17,16 +20,28 @@ public class Trashcan extends Obstacle {
 		else{
 			rayon=0;
 		}
-
 	}
+	
+	/**
+	 * Renvoie la position en x du centre de la poubelle.
+	 * @return x la position en x du centre de la poubelle.
+	 */
 	public double getX(){
 		return x;
 	}
 	
+	/**
+	 * Renvoie la position en y du centre de la poubelle.
+	 * @return y la position en y du centre de la poubelle.
+	 */
 	public double getY(){
 		return y;
 	}
 	
+	/**
+	 * Renvoie le rayon de la poubelle.
+	 * @return rayon le rayon de la poubelle.
+	 */
 	public double getRadius(){
 		return rayon;
 	}

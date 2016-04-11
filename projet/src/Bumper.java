@@ -64,18 +64,30 @@ public class Bumper extends Sensor {
 		
 	}
 
+	/**
+	 * Renvoie le statut du bumper, vrai si il est actif.
+	 */
 	public boolean isTriggered() {
 		return triggered;
 	}
 
+	/**
+	 * Renvoie l'angle initial du bumper.
+	 */
 	public double getAngleInit() {
 		return angleInit;
 	}
 
+	/**
+	 * Renvoie l'amplitude angulaire du bumper.
+	 */
 	public double getSpan() {
 		return span;
 	}
 
+	/**
+	 * Donne les informations du bumper sous forme de String.
+	 */
 	@Override
 	public String toString() {
 		return "Bumper from:"+angleInit+", span:"+span+" etat: "+(triggered?"actif":"inactif");

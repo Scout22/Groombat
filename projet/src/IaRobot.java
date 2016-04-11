@@ -102,6 +102,10 @@ public class IaRobot {
 		return false;
 	}
 
+	/**
+	 * Mode yolo de l'IA.
+	 * Le robot fonce tout droit puis tourne vers la gauche tant qu'il est bloque.
+	 */
 	private void yolo(){
 		boolean all_clear = true;
 		for(int i=0; i<this.robot.sensors.size(); i++){
@@ -121,17 +125,25 @@ public class IaRobot {
 		}
 	}
 
-	
+	/**
+	 * Test si le robot peut avancer ou est bloque.
+	 */
 	private boolean front_clear(Bumper bumper) {
 		boolean res = bumper.isTriggered() && (Posture.isAngleInSpan(bumper.getAngleInit(), -Math.PI/2, Math.PI) || Posture.isAngleInSpan(Posture.normalize_angle(bumper.getAngleInit()+bumper.getSpan()), -Math.PI/2, Math.PI));
 		return !res;
 	}
 
+	/**
+	 * Tourne le robot vers la droite.
+	 */
 	private void rotateRight() {
 		this.robot.setSpeedLeft(-1);
 		this.robot.setSpeedRight(1);	
 	}
 
+	/**
+	 * Tourne le robot vers la gauche.
+	 */
 	private void rotateLeft() {
 		this.robot.setSpeedLeft(1);
 		this.robot.setSpeedRight(-1);	

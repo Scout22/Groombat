@@ -85,6 +85,11 @@ public abstract class Main {
 		}
 	}
 
+	/**
+	 * Configuration initiale de la simulation.
+	 * Permet de creer une simulation customisee, avec un ou plusieurs robots places a loisir dans une carte egalement cree.
+	 * Bloque la simulation tant que l'initialisation n'est pas terminee.
+	 */
 	private static Simulator config_menu() {
 		ArrayList<Robot> robs = new ArrayList<Robot>();
 		ArrayList<Obstacle> obs = new ArrayList<Obstacle>();
@@ -101,6 +106,11 @@ public abstract class Main {
 		return sim;
 	}
 
+	
+	/**
+	 * Actualise le programme.
+	 * Lance la simulation puis met a jour l'affichage graphique.
+	 */
 	static void run_simulation(Simulator sim, UI g){
 
 		//Actualise la commande 

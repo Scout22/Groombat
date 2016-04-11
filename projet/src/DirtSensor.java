@@ -45,34 +45,62 @@ public class DirtSensor extends Sensor {
 		}
 	}
 
+	/**
+	 * Renvoie la distance entre le centre du capteur et le centre du robot.
+	 */
 	public double getRadiusInRobot() {
 		return radiusInRobot;
 	}
 
+	/**
+	 * Fixe la distance entre le centre du capteur et le centre du robot.
+	 * @param radiusInRobot distance souhaitee.
+	 */
 	public void setRadiusInRobot(double radiusInRobot) {
 		this.radiusInRobot = radiusInRobot;
 	}
 
+	/**
+	 * Renvoie l'angle de positionnement du capteur dans le robot.
+	 */
 	public double getAngle() {
 		return angle;
 	}
 
+	/**
+	 * Fixe l'angle de positionnement du capteur dans le robot.
+	 * @param angle angle souhaite.
+	 */
 	public void setAngle(double angle) {
 		this.angle = angle;
 	}
 
+	/**
+	 * Renvoie le rayon du capteur.
+	 */
 	public double getSensorRadius() {
 		return sensorRadius;
 	}
 
+	/**
+	 * Fixe le rayon du capteur.
+	 * @param sensorRadius rayon souhaite.
+	 */
 	public void setSensorRadius(double sensorRadius) {
 		this.sensorRadius = sensorRadius;
 	}
 
+	/**
+	 * Renvoie l'etat du capteur, true si il est actif.
+	 */
 	public boolean isTriggered() {
 		return triggered;
 	}
 
+	/**
+	 * Impose l'etat du capteur.
+	 * @param triggered etat du capteur, vrai = capteur actif.
+	 */
 	public void setTriggered(boolean triggered) {
 		this.triggered = triggered;
 	}
@@ -105,6 +133,9 @@ public class DirtSensor extends Sensor {
 		
 	}
 
+	/**
+	 * Renvoie le capteur sous forme textuelle.
+	 */
 	@Override
 	public String toString() {
 		

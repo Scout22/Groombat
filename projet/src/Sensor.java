@@ -10,6 +10,10 @@ public abstract class Sensor {
 	 */
 	public abstract void updateState(Map map,Robot rob );
 	
+	/**
+	 * Donne le type du capteur.
+	 * @return type le type du capteur.
+	 */
 	public String getType(){
 		return type;
 	}
