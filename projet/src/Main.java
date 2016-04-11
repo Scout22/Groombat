@@ -17,8 +17,8 @@ public abstract class Main {
 
 	public static void main(String[] args) { // on lance le main avec l'argument --text pour avoir l'interface textuelle
 
-
-		/*//Robot groombat = new Robot(-0.4,-0.5,2,1,Math.toRadians(0),0.4,1,0.2);
+		/*	
+		//Robot groombat = new Robot(-0.4,-0.5,2,1,Math.toRadians(0),0.4,1,0.2);
 		//Robot groombat = new Robot(0.4,0.4,2,1,Math.toRadians(270),0.4,1,0.2);
 		//Robot groombat = new Robot(-0.4,-0.4,2,1,Math.toRadians(0),0.4,1,0.2);
 		//Robot groombat = new Robot(0.4,0.5,2,1,Math.toRadians(145),0.4,2,0.2);
