@@ -205,6 +205,11 @@ public class Robot {
 	public Robot clone(){
 		return new Robot(speedLeft,speedRight, posture.getX(), posture.getY(),posture.getTheta(),  radius,  0, distWheel);
 	}
+
+	public void setDistWheel(double dist_w) {
+		distWheel=dist_w;
+		
+	}
 	
 
 }

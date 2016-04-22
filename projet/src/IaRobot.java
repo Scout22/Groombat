@@ -7,24 +7,24 @@ public class IaRobot {
 	int mode;
 	private boolean is_Rotating_Left = false;
 	private boolean is_Rotating_Right = false;
-	
+
 	/**
 	 * Constructeur par defaut.
 	 * Le mode de l'IA est mis a 1 (mode yolo).
 	 * @param robot robot controle par l'IA
 	 */
-	
+
 	public IaRobot(Robot robot) {
 		this.robot = robot;
 	}
-	
+
 	/**
 	 * Constructeur de l'IA.
 	 * Les differents modes : (1) mode yolo (2) mode cleaner, le robot s'arrete sur les taches
 	 * @param robot robot controle par l'IA.
 	 * @param mode entier representant le mode de fonctionnement de l'IA.
 	 */
-	
+
 	public IaRobot(Robot robot, int mode) {
 		this.robot = robot;
 		this.mode = mode;
@@ -40,12 +40,13 @@ public class IaRobot {
 			this.yolo();
 			break;
 		case 2:
+		default:
 			this.cleaner();
 			break;
 		}
 	}
-	
-	
+
+
 	/**
 	 * Mode cleaner de l'IA.
 	 * Le robot cherche aleatoirement les taches et s'arrete quand il passe dessus.
@@ -86,7 +87,7 @@ public class IaRobot {
 		}
 	}
 
-	
+
 	/**
 	 * Test si le robot associe a cet IA est sur une tâche
 	 */

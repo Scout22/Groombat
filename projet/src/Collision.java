@@ -4,6 +4,7 @@ public abstract class Collision {
 
 	private static double precision=0;
 
+	
 	public static boolean CircleLine(Point2D.Double c,double r,Line2D.Double line){
 		if(line.ptSegDist(c)+precision<=r){
 			return true;
@@ -24,6 +25,16 @@ public abstract class Collision {
 
 	}
 
+	/**
+	 * Verifie si un arc de cercle est en collision avec un cercle
+	 * @param ac Centre de l'arc de cercle
+	 * @param ar Rayon de l'arc de cercle
+	 * @param angleMin angle min de l'arc de cercle en degrée
+	 * @param angleSpan etandu de l'arc en degrée
+	 * @param c centre du cercle
+	 * @param r rayon du cercle
+	 * @return Vrai en cas de contact entre les deux elements
+	 */
 	public static boolean ArcCircle(Point2D.Double ac,double ar,double angleMin,double angleSpan,Point2D.Double c,double r){
 		if(CircleCircle(c,r,ac,ar)){
 			//Calcule de l'angle entre le vecteur AB et l'axe X 
@@ -37,6 +48,15 @@ public abstract class Collision {
 		}
 		return false;
 	}
+	/**
+	 * Verifie si un arc de cercle est en collision avec une ligne
+	 * @param ac Centre ce l'arc de cercle
+	 * @param ar Rayon de l'arc de cercle
+	 * @param angleMin angle min de l'arc de cercle en degrée
+	 * @param angleSpan etandu de l'arc en degrée
+	 * @param line ligne 
+	 * @return Vrai en cas de contact entre les deux elements
+	 */
 	public static boolean ArcLine(Point2D.Double ac,double ar,double angleMin,double angleSpan,Line2D.Double line){
 		if(line.ptSegDist(ac)+2*precision<=ar){
 

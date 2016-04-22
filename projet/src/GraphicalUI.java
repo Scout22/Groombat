@@ -15,9 +15,9 @@ class GraphicalUI extends UI
 	private static double scaleFactor=200;
 	private Image img0;
 	JFrame ma_fenetre ;
-
 	public GraphicalUI(Simulator sim)
 	{
+		
 		img0 = Toolkit.getDefaultToolkit().getImage("a.png");
 		this.sim = sim;
 		setBackground(Color.white);
@@ -27,6 +27,7 @@ class GraphicalUI extends UI
 	    setPreferredSize(new Dimension((int)(scaleFactor*sim.getWidth()),(int)(scaleFactor*sim.getHeight())));
 	    ma_fenetre.setContentPane(this);
 	    ma_fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    ma_fenetre.setResizable(false);
 	    ma_fenetre.pack();
 	    ma_fenetre.setVisible(true);
 	}
@@ -95,6 +96,17 @@ class GraphicalUI extends UI
 				}
 				g.drawArc((int)(x-radius),(int)(y-radius),(int)(2*radius),(int)(2*radius),-(int)Math.toDegrees(bump.angleInit),-(int)Math.toDegrees(bump.span));
 			}
+			else if(sens instanceof Ultrasound){
+				Ultrasound us=(Ultrasound)sens;
+				double dist=scaleFactor*us.getDist()+radius;
+				if(us.isTriggered()){
+					g.setColor(Color.RED);
+				}
+				else{
+					g.setColor(new Color(1, 0, 0, (float)0.7));
+				}
+				g.fillArc((int)(x-dist),(int)(y-dist),(int)(2*dist),(int)(2*dist),-(int)Math.toDegrees(us.angleInit),-(int)Math.toDegrees(us.span));
+			}
 			else if(sens instanceof DirtSensor){
 				DirtSensor ds=(DirtSensor)sens;
 				if(ds.isTriggered()){
@@ -153,7 +165,6 @@ class GraphicalUI extends UI
 	@Override
 	void updateDisplay() {
 		repaint();
-		
 	}
 
 

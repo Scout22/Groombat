@@ -21,9 +21,52 @@ public class Simulator {
 		this.deltaT=deltaT;
 		this.width=width;
 		this.height=height;
+		addFence();
 	}
 
+	public Simulator(String mode){
+		if(mode=="demo"){
+			Robot groombat = new Robot(-0.4,-0.5,2,1,Math.toRadians(0),0.4,2,0.2);
+			robots = new ArrayList<Robot>();
+			robots.add(groombat);
 
+
+			DirtSensor sens = new DirtSensor(0.1,-2*Math.PI/3,0.05,groombat);
+			groombat.addSensor(sens);
+
+			for(int i=-11;i<360;i+=10){
+				Bumper bump = new Bumper(i,11);
+				groombat.addSensor(bump);}
+
+			Trashcan trash = new Trashcan(0.5,2.5,0.2);
+			Trashcan trash2 = new Trashcan(2,2,0.2);
+			Trashcan trash3 = new Trashcan(3,1,0.2);
+
+			Wall wall1 = new Wall(0,0,0,4);
+			Wall wall2 = new Wall(0,4,4,4);
+			Wall wall3 = new Wall(4,4,4,0);
+			Wall wall4 = new Wall(4,0,0,0);
+			Wall wall5 = new Wall(2,2,2,4);
+
+			terrain=new Map();
+			terrain.addObstacle(trash);
+			terrain.addObstacle(trash2);
+			terrain.addObstacle(trash3);
+
+			terrain.addObstacle(wall1);
+			terrain.addObstacle(wall2);
+			terrain.addObstacle(wall3);
+			terrain.addObstacle(wall4);
+			terrain.addObstacle(wall5);
+
+
+			DirtSpot dirt = new DirtSpot(1,1,0.4);
+			terrain.addDirtSpot(dirt);
+
+			width=4;
+			height=4;
+		}
+	}
 	public double getWidth(){
 		return width;
 	}
@@ -68,12 +111,12 @@ public class Simulator {
 		}
 		return true;
 	}
-	
+
 	private void updateTerrain(){
 		for(Robot rob:robots){
 			terrain.cleanDirtSpot(rob,deltaT*5*rob.getRadius());
 		}}
-	
+
 	public void addRobot(Robot rob){
 		robots.add(rob);
 	}
@@ -96,7 +139,19 @@ public class Simulator {
 	public double getDeltaT() {
 		return deltaT;
 	}
+	public void setMap(Map mapy) {
+		terrain=mapy;
 
+	}
+	public void addFence(){
+		terrain.addObstacle(new Wall(0,0,0,height));
+		terrain.addObstacle(new Wall(0,height,width,height));
+		terrain.addObstacle(new Wall(width,height,width,0));
+		terrain.addObstacle(new Wall(width,0,0,0));
+	}
+	public Map getMap() {
+		return terrain;
+	}
 
 
 }
