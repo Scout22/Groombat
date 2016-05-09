@@ -1,5 +1,9 @@
 import java.awt.geom.*;
 
+/**
+ * @author Yanis
+ * Classe définissant les obstacles de formes ciculaires (poubelle)
+ */
 public class Trashcan extends Obstacle {
 	private double x;
 	private double y;
@@ -47,11 +51,18 @@ public class Trashcan extends Obstacle {
 	}
 	
 	
+	/**
+	 * Renvoie le centre de l'obstacle
+	 * @return Centre de l'obstacle
+	 */
 	public Point2D.Double getPt(){
 		return new Point2D.Double(x,y);
 	}
 	
 	
+	/* !CodeTemplates.overridecomment.nonjd!
+	 * @see Obstacle#isCollideRobot(Robot)
+	 */
 	public boolean isCollideRobot(Robot rob){		
 		return Collision.CircleCircle(getPt(), rayon, new Point2D.Double(rob.getX(),rob.getY()),rob.getRadius());
 	}

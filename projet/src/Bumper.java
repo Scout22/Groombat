@@ -1,5 +1,9 @@
 import java.awt.geom.Point2D;
 
+/**
+ * @author Yanis
+ *	Classe definissant un capteur de type bumper
+ */
 public class Bumper extends Sensor {
 
 	protected double angleInit;

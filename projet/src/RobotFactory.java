@@ -1,6 +1,5 @@
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
 
+import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -9,26 +8,27 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
-import javax.swing.JFormattedTextField;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import java.awt.FlowLayout;
 
+/**
+ * @author Yanis
+ * Class permettant de cree un robot avec une interface graphique
+ */
+@SuppressWarnings("serial")
 public class RobotFactory extends JFrame {
 
 	private JPanel contentPane;
 	private JPanel robotPane;
 	private JTextField textField_WheelDist;
 	private JTextField textField_RobotRadius;
+	@SuppressWarnings("rawtypes")
 	private JComboBox comboBox_Capteur;
-	JComboBox comboBox_IA;
+	@SuppressWarnings("rawtypes")
+	private JComboBox comboBox_IA;
 	private Robot rob;
-	public boolean init_done=false;
+	private boolean init_done=false;
 
 	/**
 	 * Launch the application.
@@ -51,7 +51,7 @@ public class RobotFactory extends JFrame {
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public RobotFactory() {
-		rob=new Robot(0,0,2,1,0,0.4,1,0.2);
+		rob=new Robot(0,0,2,2,0,0.4,1,0.2);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1000, 670);
 		setResizable(false);
@@ -62,7 +62,7 @@ public class RobotFactory extends JFrame {
 		contentPane.setLayout(null);
 
 		robotPane = new Panneau(rob);
-		robotPane.setBounds(12, 12, 612, 612);
+		robotPane.setBounds(12, 12, 600, 600);
 		contentPane.add(robotPane);
 
 
@@ -145,11 +145,6 @@ public class RobotFactory extends JFrame {
 			}
 		});
 
-
-
-
-
-
 		JLabel lblDiametreDuRobot = new JLabel("Rayon du robot en mm");
 		lblDiametreDuRobot.setBounds(12, 68, 148, 16);
 		panel.add(lblDiametreDuRobot);
@@ -167,8 +162,14 @@ public class RobotFactory extends JFrame {
 		comboBox_IA = new JComboBox();
 		comboBox_IA.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				rob.setIa(new IaRobot(rob,comboBox_IA.getSelectedIndex()+1));
-
+				switch(comboBox_IA.getSelectedIndex()+1){
+				case 1:
+					rob.setIa(new IaRobotRandom(rob));
+					break;
+				case 2:
+					rob.setIa(new IaRobotTache(rob));
+				break;
+				}
 			}
 		});
 		comboBox_IA.setBounds(28, 211, 274, 53);
@@ -191,6 +192,11 @@ public class RobotFactory extends JFrame {
 
 	}
 
+	/**
+	 * Methode permettant de choisir la fenetre de dialog a lancer
+	 * @param selectedIndex choix de la fenetre lancer
+	 * 
+	 */
 	protected void PopUpSensor(int selectedIndex) {
 		switch (selectedIndex){
 		case 0:
@@ -200,6 +206,7 @@ public class RobotFactory extends JFrame {
 			PopUpBumper();
 			break;
 		case 2:
+			PopUpLaser();
 			break;
 		case 3:
 			PopUpUltrasound();
@@ -209,6 +216,16 @@ public class RobotFactory extends JFrame {
 		}
 	}
 
+	/**
+	 * Methode d'aquisition des parametre pour un capteur laser
+	 */
+	private void PopUpLaser(){
+		JOptionPane.showMessageDialog(RobotFactory.this,"Ce capteur n'est pas encore implementer");
+	}
+
+	/**
+	 * Methode d'aquisition des parametre pour un capteur a ultrason
+	 */
 	private void PopUpUltrasound() {
 		JTextField xField = new JTextField(5);
 		JTextField yField = new JTextField(5);
@@ -250,6 +267,9 @@ public class RobotFactory extends JFrame {
 		}
 	}
 
+	/**
+	 *  Methode d'aquisition des parametres pour un capteur a de poussiere
+	 */
 	private void PopUpDirt() {
 
 		JTextField angleField = new JTextField(5);
@@ -291,9 +311,10 @@ public class RobotFactory extends JFrame {
 		}
 
 	}
-	public Robot getRobot(){
-		return rob;
-	}
+
+	/**
+	 *  Methode d'aquisition des parametres pour un bumper
+	 */
 	private void PopUpBumper() {
 
 		JTextField xField = new JTextField(5);
@@ -329,4 +350,20 @@ public class RobotFactory extends JFrame {
 
 		}
 	}
+
+	/**
+	 * Methode permettant de reccupere le robot cree
+	 * @return Retourne le robot cree
+	 */
+	public Robot getRobot(){
+		return rob;
+	}
+
+	/**
+	 * @return Si la fenetre a finit de cree le robot
+	 */
+	public boolean isInit_done() {
+		return init_done;
+	}
+
 }

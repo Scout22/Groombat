@@ -1,4 +1,8 @@
 
+/**
+ * @author Yanis
+ * Class generique permettant de representer un capteur du robot
+ */
 public abstract class Sensor {
 	protected String type;
 	public Sensor() {

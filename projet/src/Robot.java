@@ -2,8 +2,8 @@ import java.util.ArrayList;
 
 
 /**
- * @author 3410420
- *
+ * @author Oscar
+ * Class representant un robot, contient sa position, ses capteurs et son IA
  */
 
 public class Robot {
@@ -15,20 +15,6 @@ public class Robot {
 	private IaRobot ia;
 	public ArrayList<Sensor> sensors;
 	private double distWheel;
-	
-	/**
-	 * Constructeur par default.
-	 * Le robot possede une position et une ia par default, aucun capteur, des vitesses nulles et un rayon de 10cm.
-	 */
-	public Robot(){
-		this.speedLeft = 0.0;
-		this.speedRight = 0.0;
-		this.posture = new Posture(0.0,0.0,0.0);
-		this.radius = 0.1;
-		this.distWheel=0.1;
-		this.ia = new IaRobot(this);
-		this.sensors = new ArrayList<Sensor>();
-	}
 
 	/**
 	 * Constructeur du robot.
@@ -41,16 +27,23 @@ public class Robot {
 	 * @param mode mode de fonctionnement du robot (entier).
 	 * @param distWheel distance entre les roues du robot (en m).
 	 */
-	public Robot(double speedLeft, double speedRight, double x, double y,double theta, double radius, int mode,double distWheel){
+	public Robot(double speedLeft, double speedRight, double x, double y,double theta, double radius, int ia_,double distWheel){
 		this.speedLeft = speedLeft;
 		this.speedRight = speedRight;
 		this.posture = new Posture(x,y,theta);
-		this.ia = new IaRobot(this, mode);
 		this.sensors = new ArrayList<Sensor>();
 		this.radius = radius;
 		this.distWheel=distWheel;
+		switch(ia_){
+		case 2:
+			this.ia=new IaRobotTache(this);
+			break;
+		case 1:
+			this.ia=new IaRobotRandom(this);
+			break;
+		}
 	}
-	
+
 	/**
 	 * Autre contstructeur du robot, utile dans certaines fonctions.
 	 * @param speedLeft vitesse de depart de la roue gauche (en m/s).
@@ -65,8 +58,10 @@ public class Robot {
 		this.posture = p;
 		this.radius = radius;
 		this.distWheel=distWheel;
+		ia=new IaRobot();
+
 	}
-	
+
 	/**
 	 * Renvoie la distance entre les roues du robot (en m).
 	 * @return distWheel Renvoie la distance entre les roues du robot (en m).
@@ -74,7 +69,7 @@ public class Robot {
 	public double getDistWheel(){
 		return distWheel;
 	}
-	
+
 	/** Renvoie l'IA du robot.
 	 * @return ia l'IA du robot.
 	 */
@@ -129,7 +124,7 @@ public class Robot {
 	public Posture getPosture() {
 		return posture;
 	}
-	
+
 	/**
 	 * Fixe la posture du robot.
 	 * @param posture posture souhaitee.
@@ -153,7 +148,7 @@ public class Robot {
 	public void setSensors(ArrayList<Sensor> sensors) {
 		this.sensors = sensors;
 	}
-	
+
 	/**
 	 * Ajoute un capteur a la liste des capteurs du robot.
 	 * @param sensor capteur a ajouter.
@@ -193,7 +188,7 @@ public class Robot {
 	public double getY() {
 		return this.posture.getY();
 	}
-	
+
 	/**
 	 * Renvoie l'angle d'orientation du robot.
 	 * @return theta l'angle d'orientation du robot.
@@ -201,15 +196,15 @@ public class Robot {
 	public double getTheta(){
 		return this.posture.getTheta();
 	}
-	
+
 	public Robot clone(){
 		return new Robot(speedLeft,speedRight, posture.getX(), posture.getY(),posture.getTheta(),  radius,  0, distWheel);
 	}
 
 	public void setDistWheel(double dist_w) {
 		distWheel=dist_w;
-		
+
 	}
-	
+
 
 }

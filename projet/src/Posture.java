@@ -2,6 +2,7 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 
 /**
+ * Class fourni dans le sujet
  * Represente une position x,y + un angle
  */
 public class Posture implements Cloneable
@@ -92,6 +93,13 @@ public class Posture implements Cloneable
 	}
 	
 	
+	/**
+	 * Permet de verifier qu'un angle est dans un intervale
+	 * @param angleContact Angle considerer
+	 * @param angleMin Angle min de l'intervalle
+	 * @param angleSpan Etandue de l'interval
+	 * @return Boolean a true si l'angle se trouve dans l'intervale, false sinon
+	 */
 	public static boolean isAngleInSpan(Double angleContact,Double angleMin,Double angleSpan){
 		//Cas Basique en dehors bumper n'incluant pas le point pi
 		if(!(angleMin>0 && angleMin*Posture.normalize_angle(angleMin+angleSpan)<0)){
@@ -109,6 +117,7 @@ public class Posture implements Cloneable
 			}}
 		return false;
 	}
+	
 	/**
 	 * return l'angle remis dans [-PI;PI]
 	 */

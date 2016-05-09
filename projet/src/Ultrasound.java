@@ -1,5 +1,9 @@
 import java.awt.geom.Point2D;
 
+/**
+ * @author Yanis
+ * Class gerant les capteurs de type capteur a Ultrason, il s'agit de detecteur fonctionnant comme les bumpers mais ayant une action a distance
+ */
 public class Ultrasound extends Sensor {
 
 	protected double angleInit;
@@ -25,7 +29,7 @@ public class Ultrasound extends Sensor {
 	}
 
 	/**
-	 * Indique si le capteur est actif car en collision avec un obstacle.
+	 * Met a jours l'etat du capteur (actif/inactif)
 	 * @param map carte contenant la liste des obstacles.
 	 * @param robot robot portant le capteur.
 	 */
@@ -53,21 +57,24 @@ public class Ultrasound extends Sensor {
 	}
 
 	/**
-	 * Renvoie le statut du bumper, vrai si il est actif.
+	 * Renvoie le statut du capteur a ultrason, vrai si il est actif.
+	 * @return Renvoie le statut du capteur à ultrason, vrai si il est actif.
 	 */
 	public boolean isTriggered() {
 		return triggered;
 	}
 
 	/**
-	 * Renvoie l'angle initial du bumper.
+	 * Renvoie l'angle de depart du capteur à ultrason.
+	 * @return Renvoie l'angle de depart du capteur à ultrason.
 	 */
 	public double getAngleInit() {
 		return angleInit;
 	}
 
 	/**
-	 * Renvoie l'amplitude angulaire du bumper.
+	 * Renvoie l'amplitude angulaire du capteur à ultrason.
+	 * @return Renvoie l'amplitude angulaire du capteur à ultrason.
 	 */
 	public double getSpan() {
 		return span;
@@ -75,12 +82,17 @@ public class Ultrasound extends Sensor {
 
 	/**
 	 * Donne les informations du bumper sous forme de String.
+	 * @return Donne les informations du bumper sous forme de String.
 	 */
 	@Override
 	public String toString() {
 		return "Ultrasound from:"+angleInit+", span:"+span+", distance:"+distance+" etat: "+(triggered?"actif":"inactif");
 	}
 
+	/**
+	 * Renvoie la distance de detection du capteur
+	 * @return Renvoie la distance de detection du capteur
+	 */
 	public double getDist() {
 		return distance;
 	}

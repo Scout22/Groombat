@@ -1,14 +1,7 @@
-/RobotFactory.class
-/RobotFactory$1.class
-/Panneau.class
+/IaRobotTache.class
+/IaRobotRandom.class
 /RobotFactory$2.class
 /RobotFactory$3.class
 /RobotFactory$4.class
 /RobotFactory$5.class
-/MapFactory$1.class
-/MapFactory$2.class
-/MapFactory$3.class
-/MapFactory$4.class
-/MapFactory$5.class
-/MapFactory.class
-/Ultrasound.class
+/CollisionTest.class

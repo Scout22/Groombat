@@ -1,30 +1,33 @@
-import java.awt.*;
-
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JTextField;
-
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+/**
+ * @author Oscar
+ * Classe permettant de reccuperer les paramètres de la simulation
+ */
 public class MenuUI extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
-	JFrame ma_fenetre ;
-	JPanel content;
-	JLabel bg;
-	JTextField sizeX;
-	JTextField sizeY; 
-	JTextField nbRobot; 
-	JTextField delta;
-	JLabel tx;
-	JLabel tnb;
-	JLabel ty;
-	JLabel tdel;
+	private JFrame ma_fenetre ;
+	private JPanel content;
+	private JLabel bg;
+	private JTextField sizeX;
+	private JTextField sizeY; 
+	private JTextField nbRobot; 
+	private JTextField delta;
+	private JLabel tx;
+	private JLabel tnb;
+	private JLabel ty;
+	private JLabel tdel;
 	public Simulator sim;
 	private boolean init_done = false;
 	private JButton start;
@@ -114,6 +117,7 @@ public class MenuUI extends JPanel implements ActionListener {
 		tdel = new JLabel("Temps de rafraichissement (ms)");
 		tdel.setSize(250, 25);
 		tdel.setLocation(250, 300);
+		
 		tnb = new JLabel("Nombre de robot");
 		tnb.setSize(250, 25);
 		tnb.setLocation(250, 400);
@@ -167,10 +171,10 @@ public class MenuUI extends JPanel implements ActionListener {
 			content.add(tdel);
 			content.add(sizeX);
 			content.add(tx);
-			content.add(tnb);
 			content.add(sizeY);
 			content.add(ty);
-			content.add(nbRobot);
+			//content.add(tnb);
+			//content.add(nbRobot);
 			content.validate();
 			content.repaint();
 		} else if(source == done && !is_Error){
@@ -189,6 +193,7 @@ public class MenuUI extends JPanel implements ActionListener {
 		}
 		checkValue();
 	}
+	
 	/**
 	 * Fonction qui verifie si les valeurs saisie sont correctes, et met la variable is_Error à true si c'est le cas.
 	 */

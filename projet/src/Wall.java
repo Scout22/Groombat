@@ -2,6 +2,10 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 
 //Les murs ne peuvent etre que verticale ou horizontale.
+/**
+ * @author Yanis
+ * Class quit definit les obstacles de type lineaire tel que les murs
+ */
 public class Wall extends Obstacle {
 	private Line2D.Double line;
 	
@@ -49,10 +53,19 @@ public class Wall extends Obstacle {
 		return line.getY2();
 	}
 
+	/**
+	 * Renvoie le segment delimitant le mur
+	 * @return retourne le segment representant le mur
+	 */
 	public Line2D.Double getLine(){
 		return line;
 	}
 	
+	/* 
+	 * Verifie si le robot est en contact avec le mur
+	 * @see Obstacle#isCollideRobot(Robot)
+	 * @return Booleen à vrai si le robot est en contact avec le mur faux sinon
+	 */
 	public boolean isCollideRobot(Robot rob){
 		double xRobot=rob.getX();
 		double yRobot=rob.getY();

@@ -4,9 +4,6 @@ public class DirtSpot {
 	private double x;
 	private double y;
 	private double rayon;
-	private double init_rayon;
-	private double remaining_life;
-	private double full_life;
 	
 	/**
 	 * Creation d'une tache de position (x,y) et de rayon rayon.
@@ -19,9 +16,6 @@ public class DirtSpot {
 		this.x=x;
 		this.y=y;
 		this.rayon=rayon;
-		init_rayon = rayon;
-		remaining_life=Math.PI*rayon*rayon*30;
-		full_life = remaining_life;
 	}
 	
 	/**
@@ -46,15 +40,18 @@ public class DirtSpot {
 	public double getRadius(){
 		return rayon;
 	}
+	
+	private double getLife(){
+		return Math.PI*rayon*rayon*30;
+	}
 
 	/**
 	 * Permet de netoyer une tache en la rendant plus petite jusqu'a la faire disparaitre.
 	 * @param d enleve d points de vie a une tache.
 	 */
 	public boolean clean(double d) {
-		remaining_life-=d;
-		rayon = init_rayon*(remaining_life/full_life);
-		if(remaining_life<2){
+		rayon=Math.sqrt((getLife()-d)/(30*Math.PI));
+		if(getLife()<2){
 			return true;
 		}
 		else {
@@ -62,6 +59,10 @@ public class DirtSpot {
 		}	
 	}
 
+	/**
+	 * Fonction permettant reccuperer le centre de la tache
+	 * @return un point indicant la position du centre de la tache
+	 */
 	public Point2D.Double getPt() {
 		return new Point2D.Double(x, y);
 	}

@@ -1,5 +1,9 @@
 import java.awt.geom.Point2D;
 
+/**
+ * @author Yanis
+ * Classe definissant un capteur de poussiere
+ */
 public class DirtSensor extends Sensor {
 	
 	protected double radiusInRobot; 
@@ -123,11 +127,20 @@ public class DirtSensor extends Sensor {
 		
 	}
 	
+	/**
+	 * Obtient la position absolue du capteur dans la fenetre
+	 * @param rob robot considerer
+	 * @return Position du capteur au sein de la fenetre
+	 */
 	public Point2D.Double getAbsPos(Robot rob){
 		return new Point2D.Double(rob.getX()+Math.cos(angle+rob.getTheta())*radiusInRobot,rob.getY()-Math.sin(angle+rob.getTheta())*radiusInRobot);
 		
 	}
 	
+	/**
+	 * Position du capteur au seins d'un robot
+	 * @return position relative du robot au sein d'un robot
+	 */
 	public Point2D.Double getRelativePos(){
 		return new Point2D.Double(Math.cos(angle)*radiusInRobot,Math.sin(angle)*radiusInRobot);
 		

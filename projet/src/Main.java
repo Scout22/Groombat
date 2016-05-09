@@ -1,20 +1,15 @@
-import java.awt.Dimension;
-import java.awt.geom.Line2D;
-import java.util.ArrayList;
-
-import javax.swing.JFrame;
 
 
+/**
+ * @author Yanis
+ * Class principale permettant de lancer l'ensemble du programme
+ */
 public abstract class Main {
 
 	static int offset = 0;
 	static double scaleFactor=200;
 	static Simulator sim;
 
-
-	/**
-	 * @param args
-	 */
 
 	public static void main(String[] args) { // on lance le main avec l'argument --text pour avoir l'interface textuelle
 
@@ -24,7 +19,7 @@ public abstract class Main {
 			g=new TextUI(sim);
 		}
 		else{
-			g=new GraphicalUI(sim);
+			g=new GraphicalUIP(sim);
 		}
 
 		//simulation
@@ -39,9 +34,6 @@ public abstract class Main {
 	 * Bloque la simulation tant que l'initialisation n'est pas terminee.
 	 */
 	private static Simulator config_menu() {
-		ArrayList<Robot> robs = new ArrayList<Robot>();
-		ArrayList<Obstacle> obs = new ArrayList<Obstacle>();
-		ArrayList<DirtSpot> dirts = new ArrayList<DirtSpot>();
 		MenuUI menu = new MenuUI();
 		while(!menu.isInit_done()){
 			menu.update_Menu();
@@ -56,19 +48,23 @@ public abstract class Main {
 
 		sim =menu.getSimulator();
 		if(!menu.isDemoMode()){
-			for(int i=0;i<menu.getNbRobot();i++){
-				RobotFactory rob_f=new RobotFactory();
-				while(!rob_f.init_done){
-					try  { Thread.sleep(10); }
-					catch (Exception e) {}
-				}
-				sim.addRobot(rob_f.getRobot());
-			}
 			MapFactory map_f =new MapFactory(sim);
 			while(!map_f.isInitDone()){
 				try  { Thread.sleep(10); }
 				catch (Exception e) {}
-			}}
+			}
+			for(int i=0;i<menu.getNbRobot();i++){
+				RobotFactory rob_f=new RobotFactory();
+				while(!rob_f.isInit_done()){
+					try  { Thread.sleep(10); }
+					catch (Exception e) {}
+				}
+				EnvFactory env=new EnvFactory(sim,rob_f.getRobot());
+				while(!env.isInitDone()){
+					try  { Thread.sleep(10); }
+					catch (Exception e) {}
+				}}}
+
 		return sim;
 	}
 
